@@ -1,0 +1,21 @@
+.how_it_works {
+    background: #ffffff;
+}
+
+.how_it_works .card {
+    background: rgba(237, 234, 233, 0.5);
+}
+
+.how_it_works h2 {
+    color: #111111;
+}
+
+.how_it_works h3,
+.how_it_works p {
+    color: #535353;
+}
+
+.hiw_icons {
+    background: #3ac5ce;
+    color: #ffffff;
+}
