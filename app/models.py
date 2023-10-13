@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from app import db, login_manager #login_manager manages our login sessions
 from flask_login import UserMixin #to simplify user authentication in your Flask application
 
@@ -8,7 +8,6 @@ def load_user(user_id): #this is a function that will return the id of a user to
 
 class User(db.Model, UserMixin): #By inheriting from UserMixin, your custom user model gains several 
     #attributes and methods, including is_authenticated, is_active, is_anonymous, and get_id, which are essential for user authentication
-    #__table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)
@@ -21,7 +20,7 @@ class User(db.Model, UserMixin): #By inheriting from UserMixin, your custom user
         return f"User('{self.username}', '{self.email}', '{self.user_type}')"
 
 class Rider(db.Model, UserMixin):
-    #__table_args__ = {'extend_existing': True}
+    
     id = db.Column(db.Integer, primary_key=True)
     First_name = db.Column(db.String(20), nullable=False)
     Last_name = db.Column(db.String(30), nullable=False)
