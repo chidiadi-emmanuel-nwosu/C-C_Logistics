@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 
-{% block link %}
-    <link rel="stylesheet" href="{{url_for('static', filename='src/hero.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='src/header.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='src/how_it_works.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='src/features.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='src/contact.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='src/footer.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% block script %}
+    <script src="{{ url_for('static', filename='scripts/index.js') }}?{{ cache_id }}"></script>
 {% endblock %}
 
 {% block content %}

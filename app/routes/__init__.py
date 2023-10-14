@@ -4,4 +4,7 @@ from flask import Blueprint
 
 app_routes = Blueprint('app_routes', __name__)
 
-from app.routes.index import *
+from app.routes.home import *
+from app.routes.register import *
+from app.routes.rider import *
+from app.routes.user import *

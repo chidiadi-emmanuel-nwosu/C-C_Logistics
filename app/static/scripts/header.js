@@ -14,7 +14,7 @@ $(() => {
 });
 
 $(() => {
-  $('a').on('click', (event) => {
+  $('.actions a').on('click', (event) => {
     if (event.target.hash !== '') {
       event.preventDefault();
       const hash = event.target.hash;

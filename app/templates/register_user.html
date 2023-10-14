@@ -1,0 +1,29 @@
+{% extends 'register.html' %}
+
+{% block form %}
+        <h1 class="register_header text-2xl font-semibold text-center mb-4">Register as a User</h1>
+        <form method="POST" class="max-w-md mx-auto p-4 border rounded shadow-md">
+            {{ user_form.hidden_tag() }}
+            <div class="mb-4">
+                {{ user_form.email.label(class="block text-gray-600 text-sm font-semibold mb-2") }}
+                {{ user_form.email(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                {{ user_form.pwd.label(class="block text-gray-600 text-sm font-semibold mb-2") }}
+                {{ user_form.pwd(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                {{ user_form.c_pwd.label(class="block text-gray-600 text-sm font-semibold mb-2") }}
+                {{ user_form.c_pwd(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="text-center">
+                {{ user_form.submit(class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
+            </div>
+        </form>
+        <p class="mt-4 text-center">
+            Already have an account?
+            <a href="#" class="text-orange-500 hover:underline">Login</a>
+        </p>
+{% endblock %}
+
+{%  %}

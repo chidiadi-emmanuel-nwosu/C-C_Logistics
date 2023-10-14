@@ -1,0 +1,21 @@
+{% extends 'form_base.html' %}
+{% block form %}
+<div class="flex flex-col w-full h-full justify-center items-center space-y-8">
+    <h2 class="text-black text-3xl">Register as:</h2>
+    <div class="flex items-center justify-center">
+        <div class="register_toggle cursor-pointer w-72 h-16 rounded-r-full 
+                    transition-transform transform rounded-l-full bg-orange-500
+                    flex justify-start items-center p-1">
+            <div class="register_toggle_btn h-full rounded-r-full rounded-l-full 
+                        flex items-center justify-center text-2xl text-black bg-stone-300 
+                        transform transition-transform duration-200 translate-x-0">
+                User
+            </div>
+        </div>
+    </div>
+    <div class="register_btn mt-4 text-black text-2xl border border-orange-500 px-4 py-2
+                hover:bg-stone-400 transition duration-200">
+        <a id="register" href="/register/user">Register</a>
+    </div>
+</div>
+{% endblock %}

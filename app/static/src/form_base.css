@@ -1,0 +1,10 @@
+.form_base .form_image {
+  background: url("../images/welcome_form.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.form_base-inner {
+  min-height: 70vh;
+}
