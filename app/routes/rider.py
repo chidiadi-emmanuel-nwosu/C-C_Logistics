@@ -3,16 +3,16 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user
 from app.routes import app_routes
-from app.forms.login_rider import RiderLoginForm
-from app.forms.register_rider import RiderRegistrationForm
-from app.models.rider import Rider
+from app.forms.login import LoginForm
+from app.forms.register import RegistrationForm
+from app.models.agent import DeliveryAgent
 from app import db, bcrypt
 
 
 @app_routes.route('/register/rider', methods=['GET', 'POST'])
 def register_rider():
     """route for rider registration"""
-    form = RiderRegistrationForm()
+    form = RegistrationForm()
     if form.validate_on_submit():
         # Similar to user registration but for riders
         rider = Rider(
@@ -36,7 +36,7 @@ def register_rider():
 @app_routes.route('/login/rider', methods=['GET', 'POST'])
 def rider_login():
     """route for rider login"""
-    form = RiderLoginForm()
+    form = LoginForm()
     if form.validate_on_submit():
         rider = Rider.query.filter_by(email=form.email.data).first()
         if rider and bcrypt.check_password_hash(form.password.data, rider.password):
@@ -45,4 +45,3 @@ def rider_login():
             return redirect(url_for('main.home'))
         flash('Login unsuccessful. Please check your email and password.', 'danger')
     return render_template('login.html', title='Login Rider', form=form)
-

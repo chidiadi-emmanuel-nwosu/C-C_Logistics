@@ -5,8 +5,8 @@ from app.models.base_model import BaseModel
 from app import db
 
 
-class Rider(BaseModel, db.Model, UserMixin):
-    """rider class for rider datas"""
+class DeliveryAgent(BaseModel, db.Model, UserMixin):
+    """rider class for agent datas"""
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
@@ -21,4 +21,4 @@ class Rider(BaseModel, db.Model, UserMixin):
     license_image_file = db.Column(db.LargeBinary, nullable=False)
 
     def __repr__(self):
-        return f"Rider('{self.first_name}', '{self.last_name}', '{self.image_file}')"
+        return f"DeliveryAgent('{self.first_name}', '{self.last_name}', '{self.image_file}')"

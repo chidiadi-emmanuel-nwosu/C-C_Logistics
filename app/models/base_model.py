@@ -19,9 +19,9 @@ class BaseModel():
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
         else:
-            for key, value in kwargs:
+            for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
-                    key = datetime.strptime(key, "%Y-%m-%d %H:%M:%S %f")
+                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
                 if key != '__class__':
                     setattr(self, key, value)
 
@@ -42,10 +42,12 @@ class BaseModel():
         """returns a dictionary of class attributes and values"""
         new = self.__dict__.copy()
         if "created_at" in new:
-            new['created_at'] = datetime.strftime("%Y-%m-%d %H:%M:%S %f")
+            new['created_at'] = self.created_at.isoformat()
         if "updated_at" in new:
-            new['created_at'] = datetime.strftime("%Y-%m-%d %H:%M:%S %f")
+            new['updated_at'] = self.updated_at.isoformat()
         if "password" in new:
             del new['password']
+        if "_sa_instance_state" in new:
+            del new['_sa_instance_state']
 
         return new

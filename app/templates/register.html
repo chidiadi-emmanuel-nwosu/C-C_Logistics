@@ -1,21 +1,106 @@
-{% extends 'form_base.html' %}
-{% block form %}
-<div class="flex flex-col w-full h-full justify-center items-center space-y-8">
-    <h2 class="text-black text-3xl">Register as:</h2>
-    <div class="flex items-center justify-center">
-        <div class="register_toggle cursor-pointer w-72 h-16 rounded-r-full 
-                    transition-transform transform rounded-l-full bg-orange-500
-                    flex justify-start items-center p-1">
-            <div class="register_toggle_btn h-full rounded-r-full rounded-l-full 
-                        flex items-center justify-center text-2xl text-black bg-stone-300 
-                        transform transition-transform duration-200 translate-x-0">
-                User
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- <section class="w-full h-full bg-white px- md:px-2"> -->
+<section class="form_base flex justify-center items-center min-h-screen px-4 lg:px-6 bg-white py-6">
+    <div class="form_base-inner flex flex-col w-full">
+        <h2 id="register_form_header" class="text-xl text-center font-semibold leading-7 text-gray-900 mt-16 mb-4">Register a user account</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="w-full max-w-xl mx-auto p-4 border rounded-xl shadow-lg space-y-4">
+            {{ form.hidden_tag() }}
+
+            {% for field, errors in form.errors.items() %}
+                {% for error in errors %}
+                    <div class="flash-message px-4 py-3 text-center" role="alert" data-id="danger">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="flash-message px-4 py-3 text-center" role="alert" data-id="{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ form.register_as.label(class="block text-gray-600 text-sm font-semibold") }}
+                    {{ form.register_as(id="register_as", class="form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
+                <div>
+                    {{ form.gender.label(class="block text-gray-600 text-sm font-semibold") }}
+                    {{ form.gender(class="form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
             </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ form.first_name.label(class="block text-gray-600 text-sm font-semibold") }}
+                    {{ form.first_name(class="form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
+                <div>
+                    {{ form.last_name.label(class="block text-gray-600 text-sm font-semibold") }}
+                    {{ form.last_name(class="form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ form.phone_number.label(class="block text-gray-600 text-sm font-semibold") }}
+                    {{ form.phone_number(class="form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
+                <div>
+                    {{ form.date_of_birth.label(class="block text-gray-600 text-sm font-semibold") }}
+                    {{ form.date_of_birth(class="datepicker form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.email.label() }}</div>
+                {{ form.email(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.contact_address.label() }}</div>
+                {{ form.contact_address(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div id="agent_fields">
+                <div class="mb-4">
+                    <div class="text-gray-600 text-sm font-semibold">{{ form.drivers_license_number.label() }}</div>
+                    {{ form.drivers_license_number(id="drivers_license_number", class="form-input w-full p-2 rounded border bg-gray-100") }}
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        {{ form.license_expiration_date.label(class="block text-gray-600 text-sm font-semibold") }}
+                        {{ form.license_expiration_date(id="license_expiration_date", class="datepicker form-input w-full p-2 rounded border bg-gray-100") }}
+                    </div>
+                    <div>
+                        {{ form.license_image_file.label(class="block text-gray-600 text-sm font-semibold") }}
+                        {{ form.license_image_file(id="license_image_file", class="form-input w-full p-2 rounded border bg-gray-100") }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.password.label() }}</div>
+                {{ form.password(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.confirm_password.label() }}</div>
+                {{ form.confirm_password(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+        <div class="text-center">
+            {{ form.submit(class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
         </div>
+        </form>
+
+        <p class="mt-4 text-center">
+        Already have an account?
+        <a href="{{ url_for('app_routes.login') }}" class="text-orange-500 hover:underline">Login</a>
+        </p>
     </div>
-    <div class="register_btn mt-4 text-black text-2xl border border-orange-500 px-4 py-2
-                hover:bg-stone-400 transition duration-200">
-        <a id="register" href="/register/user">Register</a>
-    </div>
-</div>
+</section>
+
+
+
 {% endblock %}
