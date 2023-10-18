@@ -14,7 +14,11 @@
             <li><a href="#features">features</a></li>
             <li><a href="#reviews">testimonials</a></li>
             <li><a href="#contact">contacts</a></li>
-            <li class="login text-white py-1 px-2 md:py-2 md:px-6 border rounded-l-full rounded-r-full"><a href="/login">login</a></li>
+            {% if current_user.is_authenticated %}
+                <li class="login text-white py-1 px-2 md:py-2 md:px-6 border rounded-l-full rounded-r-full"><a href="/logout">logout</a></li>
+            {% else %}
+                <li class="login text-white py-1 px-2 md:py-2 md:px-6 border rounded-l-full rounded-r-full"><a href="/login">login</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>

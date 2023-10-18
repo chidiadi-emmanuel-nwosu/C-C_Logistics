@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """forms module"""
 
+from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, PasswordField, SubmitField, FileField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp, ValidationError
 
 
 class RegistrationForm(FlaskForm):
@@ -18,7 +19,7 @@ class RegistrationForm(FlaskForm):
         'First Name',
         validators=[
             DataRequired(),
-            Length(min=3, max=20, message="Please enter a valid name"),
+            Length(min=2, max=30, message="Please enter a valid name"),
             Regexp(
                 r'^[A-Za-z\s\-\']+$',
                 message='Invalid name format. Use letters, spaces, and hyphens only.'
@@ -29,7 +30,7 @@ class RegistrationForm(FlaskForm):
         'Last Name',
         validators=[
             DataRequired(),
-            Length(min=3, max=30, message="Please enter a valid name"),
+            Length(min=2, max=30, message="Please enter a valid name"),
             Regexp(
                 r'^[A-Za-z\s\-\']+$',
                 message='Invalid name format. Use letters, spaces, and hyphens only.'
@@ -63,3 +64,22 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[
         DataRequired(), EqualTo('password', message="Passwords do not match")])
     submit = SubmitField('Sign Up')
+
+
+    def validate_date_of_birth(self, field):
+        """validates date of birth"""
+        try:
+            date_format = '%d/%m/%Y'
+            date = datetime.strptime(field.data, date_format)
+            field.data = date.strftime(date_format)
+        except ValueError:
+            raise ValidationError('Invalid birth date format. Use dd/mm/yyyy.')
+
+    def validate_license_expiration_date(self, field):
+        """validates license expiration date"""
+        try:
+            date_format = '%d/%m/%Y'
+            date = datetime.strptime(field.data, date_format)
+            field.data = date.strftime(date_format)
+        except ValueError:
+            raise ValidationError('Invalid license date format. Use dd/mm/yyyy.')

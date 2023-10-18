@@ -2,7 +2,7 @@
 """create database models"""
 from app import create_app, db
 from app.models.user import User
-from app.models.rider import Rider
+from app.models.agent import DeliveryAgent
 from app.models.request import DeliveryRequest
 
 app = create_app('development')

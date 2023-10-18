@@ -19,6 +19,3 @@ class DeliveryAgent(BaseModel, db.Model, UserMixin):
     drivers_license_number = db.Column(db.String(10), nullable=False, unique=True)
     license_expiration_date = db.Column(db.Date, nullable=False)
     license_image_file = db.Column(db.LargeBinary, nullable=False)
-
-    def __repr__(self):
-        return f"DeliveryAgent('{self.first_name}', '{self.last_name}', '{self.image_file}')"
