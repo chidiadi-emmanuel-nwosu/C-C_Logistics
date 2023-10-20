@@ -6,3 +6,13 @@ body {
     background: #e5e5e5;
 }
 
+#googleMap {
+    height: 200px;
+    margin: 10px auto;
+}
+
+ #output {
+    text-align: center;
+    font-size: 1em;
+    margin: 20px auto;
+  }
