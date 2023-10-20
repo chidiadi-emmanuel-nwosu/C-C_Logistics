@@ -14,20 +14,17 @@ def login():
     """route for user login"""
     form = LoginForm()
     if form.validate_on_submit():
-        if form.login_as.data == 'user':
-            user = User.query.filter_by(email=form.email.data).first()
-            if user and bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                flash('Login successful!', 'success')
-                return redirect(url_for('app_routes.home'))
-            flash('Login user unsuccessful. Check your email and password.', 'danger')
-        else:
-            agent = DeliveryAgent.query.filter_by(email=form.email.data).first()
-            if agent and bcrypt.check_password_hash(agent.password, form.password.data):
-                login_user(agent)
-                flash('Login successful!', 'success')
-                return redirect(url_for('app_routes.home'))
-            flash('Login agent unsuccessful. Check your email and password.', 'danger')
+        user = User.query.filter_by(email=form.email.data).first()
+        agent = DeliveryAgent.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            flash('Login user successful!', 'success')
+            return redirect(url_for('app_routes.dashboard_account'))
+        if agent and bcrypt.check_password_hash(agent.password, form.password.data):
+            login_user(agent)
+            flash('Login agent successful!', 'success')
+            return redirect(url_for('app_routes.dashboard_account'))
+        flash('Login unsuccessful. Check your email and password.', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 

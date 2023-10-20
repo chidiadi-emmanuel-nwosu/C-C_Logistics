@@ -7,19 +7,6 @@
 
         <form method="POST" enctype="multipart/form-data" class="w-full max-w-lg mx-auto p-4 border rounded-xl shadow-lg space-y-4">
             {{ form.hidden_tag() }}
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                    <div class="flash-message px-4 py-3 text-center" role="alert" data-id="{{ category }}">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <div class="mb-4">
-                <div class="text-gray-600 text-sm font-semibold">{{ form.login_as.label() }}</div>
-                {{ form.login_as(class="form-input w-full p-2 rounded border bg-gray-100") }}
-            </div>
             <div class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.email.label() }}</div>
                 {{ form.email(class="form-input w-full p-2 rounded border bg-gray-100") }}

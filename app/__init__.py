@@ -5,8 +5,8 @@ from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from app.config import config
 from flask_migrate import Migrate
+from app.config import config
 
 
 db = SQLAlchemy()
@@ -34,10 +34,10 @@ def create_app(config_name):
     from app.models import user, agent
 
     @login_manager.user_loader
-    def load_user(id):
-        user_model = user.User.query.get((id))
+    def load_user(user_id):
+        user_model = user.User.query.get((user_id))
         if user_model is None:
-            agent_model = agent.DeliveryAgent.query.get((id))
+            agent_model = agent.DeliveryAgent.query.get((user_id))
             return agent_model
         return user_model
 

@@ -77,9 +77,10 @@ class RegistrationForm(FlaskForm):
 
     def validate_license_expiration_date(self, field):
         """validates license expiration date"""
-        try:
-            date_format = '%d/%m/%Y'
-            date = datetime.strptime(field.data, date_format)
-            field.data = date.strftime(date_format)
-        except ValueError:
-            raise ValidationError('Invalid license date format. Use dd/mm/yyyy.')
+        if self.register_as.data != "user":
+            try:
+                date_format = '%d/%m/%Y'
+                date = datetime.strptime(field.data, date_format)
+                field.data = date.strftime(date_format)
+            except ValueError:
+                raise ValidationError('Invalid license date format. Use dd/mm/yyyy.')
