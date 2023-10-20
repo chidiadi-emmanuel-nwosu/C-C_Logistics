@@ -1,24 +1,57 @@
 <header id="header" class="flex justify-between items-center py-4 px-4 md:px-6 lg:px-12 fixed top-0 left-0 right-0 max-w-screen-xl mx-auto">
-    <div class="logo border border-700 rounded py-1 px-2 flex-none">
-        <a href="{{ url_for('app_routes.home') }}" class="text-2xl font-bold">C&C <span class="font-medium">logistics</span></a>
-    </div>
-    <div class="menu-toggle hidden lg:hidden">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <nav class="nav-bar hidden md:w-9/12 xl:w-1/2">
-        <ul class="actions lg:flex justify-between items-center">
-            <li><a href="#hero">home</a></li>
-            <li><a href="#how_it_works">how it works</a></li>
-            <li><a href="#features">features</a></li>
-            <li><a href="#reviews">testimonials</a></li>
-            <li><a href="#contact">contacts</a></li>
-            {% if current_user.is_authenticated %}
-                <li class="login text-white py-1 px-2 md:py-2 md:px-6 border rounded-l-full rounded-r-full"><a href="/logout">logout</a></li>
+    <nav class="flex justify-between items-center w-full relative">
+        <div class="logo border border-700 rounded py-1 px-2 flex-none">
+            <a href="{{ url_for('app_routes.home') }}" class="text-2xl font-bold">C&C <span class="font-medium">logistics</span></a>
+        </div>
+        <div class="flex items-center relative">
+            <div id="account-btn" class="group flex justify-between items-center w-40 border border-black py-1 px-4 rounded text-black text-black hover:border-orange-500">
+                {% if current_user.is_anonymous %}
+                    <i class="fa-solid fa-user text-black group-hover:text-orange-500"></i>
+                    <button class="text-xl rounded group-hover:text-orange-500">
+                        Account 
+                    </button>
+                    <i class="fa-solid fa-caret-down group-hover:text-orange-500"></i>
+                {% else %}
+                    <button class="text-xl rounded group-hover:text-orange-500">
+                        Hi, {{ current_user.first_name }}
+                    </button>
+                    <i class="fa-solid fa-caret-down group-hover:text-orange-500"></i>
+                {% endif %}
+            </div>
+            {% if current_user.is_anonymous %}
+                <div id="account-dropdown" class="origin-top-right absolute right-0 mt-40 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                    <div class="p-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <div class="py-2 border-b border-gray-300">
+                            <a href="{{ url_for('app_routes.login') }}" class="block px-4 py-2 text-sm hover:bg-orange-400 bg-orange-500 text-center rounded text-base text-white mb-2" role="menuitem"> 
+                                Log-in
+                            </a>
+                            <a href="{{ url_for('app_routes.register') }}" class="block px-4 py-2 text-sm hover:bg-orange-100 border border-orange-500 text-center rounded text-base text-orange-700" role="menuitem"> 
+                                Register
+                            </a>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <li class="login text-white py-1 px-2 md:py-2 md:px-6 border rounded-l-full rounded-r-full"><a href="/login">login</a></li>
+                <div id="account-dropdown" class="origin-top-right absolute right-0 mt-64 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                    <div class="py-2 px-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <a href="{{ url_for('app_routes.dashboard_account') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                            <i class="fas fa-user mr-1"></i> My Account
+                        </a>
+                        <a href="{{ url_for('app_routes.dashboard_request') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                            <i class="fas fa-motorcycle mr-1"></i> Request Delivery
+                        </a>
+                        <a href="{{ url_for('app_routes.dashboard_deliveries') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                            <i class="fas fa-box mr-1"></i> My Deliveries
+                        </a>
+                        <div class="mt-6 text-center border-t border-bg-gray-300">
+                            <a href="{{ url_for('app_routes.logout') }}" class="block px-4 py-2 text-orange-600 hover:bg-orange-100 text-base" role="menuitem">
+                                Log-out
+                            </a>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
-        </ul>
+        </div>
     </nav>
 </header>
+

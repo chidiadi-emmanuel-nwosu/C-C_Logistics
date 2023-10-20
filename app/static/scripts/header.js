@@ -14,20 +14,20 @@ $(() => {
 });
 
 $(() => {
-  $('.actions a').on('click', (event) => {
-    if (event.target.hash !== '') {
-      event.preventDefault();
-      const hash = event.target.hash;
+  const $accountBtn = $('#account-btn');
+  const $accountDropdown = $('#account-dropdown');
 
-      $('html, body').animate(
-        {
-          scrollTop: $(hash).offset().top
-        },
-        800,
-        () => {
-          window.location.hash = hash;
-        }
-      );
+  // Show/hide the dropdown menu on button click
+  $accountBtn.on('click', (event) => {
+    event.stopPropagation();
+    console.log('dropdown');
+    $accountDropdown.toggleClass('hidden');
+  });
+
+  // Hide the dropdown when clicking outside of it
+  $(document).on('click', function (event) {
+    if (!$accountDropdown.is(event.target) && $accountDropdown.has(event.target).length === 0) {
+      $accountDropdown.addClass('hidden');
     }
   });
 });

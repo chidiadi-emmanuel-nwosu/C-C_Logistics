@@ -32,7 +32,7 @@ def login():
 
 
 @app_routes.route('/logout')
-@login_required
+# @login_required
 def logout():
     """route for user logout"""
     logout_user()

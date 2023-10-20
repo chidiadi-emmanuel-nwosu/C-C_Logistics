@@ -1,0 +1,40 @@
+{% extends 'dashboard.html' %}
+{% block dashboard_content %}
+    <div class="my-account mt-4">
+        <div class="flex flex-wrap md:flex-nowrap mt-2 w-full md:justify-around md:space-x-6 space-y-6 md:space-y-0">
+            <div class="bg-white border border-gray-300 rounded py-2 w-full md:w-1/2">
+                <div class="account-title flex items-center w-full border-b border-bg-gray-300 px-2">
+                    <p class="text-lg">Acccount Details</p>
+                </div>
+                <div class="account-title px-2 py-4">
+                    <p class="font-semibold">Chidiadi Nwosu</p>
+                    <p class="">nwosuchidiadi@gmail.com</p>
+                </div>
+            </div>
+            <div class="bg-white border border-gray-300 rounded py-2 w-full md:w-1/2">
+                <div class="account-title w-full border-b border-bg-gray-300 px-2">
+                    <p class="text-lg">Address Book</p>
+                </div>
+                <div class="account-title px-2 py-4">
+                    <p class="font-semibold">Your pickup delivery address:</p>
+                    <p class="">Chidiadi Nwosu</p>
+                    <p class="">7 dike street oginigba port harcourt</p>
+                    <p class="">07031173396</p>
+                </div>
+            </div>
+        </div>
+        {% if current_user.__class__.__name__ != 'User' %}
+            <div class="flex mt-6 w-full space-x-6 pr-0 md:pr-6">
+                <div class="bg-white border border-gray-300 rounded py-2 w-full md:w-1/2">
+                    <div class="account-title flex items-center w-full border-b border-bg-gray-300 px-2">
+                        <p class="text-lg">License Details</p>
+                    </div>
+                    <div class="account-title px-2 py-4">
+                        <p class="text-gray-600 mb-2">Number: 1234567890</p>
+                        <p class="text-gray-600 mb-2">Expiration: 30-10-1993</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

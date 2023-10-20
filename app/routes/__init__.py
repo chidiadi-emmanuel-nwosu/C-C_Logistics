@@ -8,3 +8,4 @@ from app.routes.home import *
 from app.routes.register import *
 from app.routes.rider import *
 from app.routes.login import *
+from app.routes.dashboard import *

@@ -1,0 +1,47 @@
+
+<section class="dashbard form_base items-center min-h-screen px-4 lg:px-6 bg-white py-6">
+    <div class="form_base-inner flex flex-col w-full justify-center items-center">
+        <h2 id="login_form_header" class="text-xl text-center font-semibold leading-7 text-gray-900 mt-16 mb-4">Login to your account</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="w-full max-w-lg mx-auto p-4 border rounded-xl shadow-lg space-y-4">
+            {{ form.hidden_tag() }}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="flash-message px-4 py-3 text-center" role="alert" data-id="{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.pickup_address.label() }}</div>
+                {{ form.pickup_address(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.delivery_address.label() }}</div>
+                {{ form.delivery_address(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.item_description.label() }}</div>
+                {{ form.item_description(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.delivery_instruction.label() }}</div>
+                {{ form.delivery_instruction(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.pickup_time.label() }}</div>
+                {{ form.pickup_time(class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+        <div class="text-center">
+            {{ form.submit(class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
+        </div>
+        </form>
+
+        <p class="mt-4 text-center">
+        Don't have an account?
+        <a href="{{ url_for('app_routes.register') }}" class="text-orange-500 hover:underline">Register here</a>
+        </p>
+    </div>
+</section>

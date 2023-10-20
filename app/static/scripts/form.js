@@ -41,3 +41,21 @@ $(() => {
     dateFormat: 'dd/mm/yy' // Set the desired date format
   });
 });
+
+// dashboard form
+
+$(() => {
+  const setPickupTimeCheckbox = $('#set-pickup-time');
+  const pickupTimeLabel = $('#pickup_time');
+  const pickupTimeField = $('#pickup-time');
+
+  // Initially, check if the checkbox is checked and adjust the field
+  pickupTimeField.prop('disabled', !setPickupTimeCheckbox.is(':checked'));
+  pickupTimeLabel.hide();
+
+  // Update the field's status when the checkbox changes
+  setPickupTimeCheckbox.on('change', (e) => {
+    pickupTimeField.prop('disabled', !$(e.target).is(':checked'));
+    $(e.target).is(':checked') ? pickupTimeLabel.show() : pickupTimeLabel.hide();
+  });
+});
