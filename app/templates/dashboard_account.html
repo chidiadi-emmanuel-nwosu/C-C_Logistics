@@ -7,8 +7,8 @@
                     <p class="text-lg">Acccount Details</p>
                 </div>
                 <div class="account-title px-2 py-4">
-                    <p class="font-semibold">Chidiadi Nwosu</p>
-                    <p class="">nwosuchidiadi@gmail.com</p>
+                    <p class="font-semibold">{{ current_user.first_name }} {{ current_user.last_name }}</p>
+                    <p class="">{{ current_user.email }} </p>
                 </div>
             </div>
             <div class="bg-white border border-gray-300 rounded py-2 w-full md:w-1/2">
@@ -16,10 +16,10 @@
                     <p class="text-lg">Address Book</p>
                 </div>
                 <div class="account-title px-2 py-4">
-                    <p class="font-semibold">Your pickup delivery address:</p>
-                    <p class="">Chidiadi Nwosu</p>
-                    <p class="">7 dike street oginigba port harcourt</p>
-                    <p class="">07031173396</p>
+                    <p class="font-semibold">Your contact address:</p>
+                    <p class="">{{ current_user.first_name }} {{ current_user.last_name }}</p>
+                    <p class="">{{ current_user.contact_address }} </p>
+                    <p class="">{{ current_user.phone_number }} </p>
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
                         <p class="text-lg">License Details</p>
                     </div>
                     <div class="account-title px-2 py-4">
-                        <p class="text-gray-600 mb-2">Number: 1234567890</p>
-                        <p class="text-gray-600 mb-2">Expiration: 30-10-1993</p>
+                        <p class="text-gray-600 mb-2">Number: {{ current_user.drivers_license_number }} </p>
+                        <p class="text-gray-600 mb-2">Expiration: {{ current_user.license_expiration_date }}</p>
                     </div>
                 </div>
             </div>

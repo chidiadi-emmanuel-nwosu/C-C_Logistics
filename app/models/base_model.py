@@ -16,8 +16,8 @@ class BaseModel():
         """initialises the class"""
         if not kwargs:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
         else:
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
@@ -28,9 +28,9 @@ class BaseModel():
             if "id" not in kwargs:
                 self.id = str(uuid.uuid4())
             if "created_at" not in kwargs:
-                self.created_at = datetime.now()
+                self.created_at = datetime.utcnow()
             if "updated_at" not in kwargs:
-                self.updated_at = datetime.now()
+                self.updated_at = datetime.utcnow()
 
 
     def __str__(self):

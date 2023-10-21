@@ -12,8 +12,8 @@ from app.config import config
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-login_manager.login_view = 'login'
-login_manager.login_message_category = 'success'
+login_manager.login_view = 'app_routes.login'
+login_manager.login_message_category = 'warning'
 migrate = Migrate()
 
 def create_app(config_name):

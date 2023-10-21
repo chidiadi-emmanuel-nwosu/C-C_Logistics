@@ -14,4 +14,5 @@ class User(BaseModel, db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     phone_number = db.Column(db.String(15), nullable=False)
+    contact_address = db.Column(db.String(200), nullable=False)
     user_type = db.Column(db.String(30), default="user")

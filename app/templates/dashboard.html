@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="flex form_base justify-center min-h-screen px-4 lg:px-4 py-6">
-    <div class="dashboard flex w-full space-x-2 max-h-fit mt-20">
+<section class="flex form_base justify-center h-screen px-4 lg:px-4 py-6 overflow-hidden">
+    <div class="dashboard flex w-full space-x-2 mt-20">
         <div class="dashboard-nav hidden md:block shadow rounded px-2 py-4 w-72 bg-white h-fit">
             <a href="{{ url_for('app_routes.dashboard_account') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-mormal mb-2 {% if request.path == url_for('app_routes.dashboard_account') %} bg-gray-100 {% endif %}" role="menuitem">
                 <i class="fas fa-user mr-2"></i> My Account
@@ -18,9 +18,9 @@
                 </a>
             </div>
         </div>
-        <div class="dashboard-content bg-white shadow rounded text-black w-full w-/4 px-4 py-2">
-            <div class="dashboard-content-header border-b border-bg-gray-300">
-                <h2 class="text-2xl font-medium mb-4">{{ dashbard_title }}</h2>
+        <div class="dashboard-content bg-white shadow rounded text-black w-full w-/4 px-4 pb-2 overflow-y-auto">
+            <div class="dashboard-content-header border-b border-bg-gray-300 bg-white py-2">
+                <h2 class="text-2xl font-medium mb-1 mt-1">{{ dashbard_title }}</h2>
             </div>
             {% block dashboard_content %}
             {% endblock %}

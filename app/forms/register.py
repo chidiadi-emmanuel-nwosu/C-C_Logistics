@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""forms module"""
+"""registration forms module"""
 
 from datetime import datetime
 from flask_wtf import FlaskForm
@@ -43,7 +43,6 @@ class RegistrationForm(FlaskForm):
             choices=[('male', 'Male'), ('female', 'Female')],
             validators=[DataRequired()]
             )
-    marital_status = StringField('Marital Status', validators=[Length(max=20)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(max=100)])
     phone_number = StringField(
         'Phone Number',

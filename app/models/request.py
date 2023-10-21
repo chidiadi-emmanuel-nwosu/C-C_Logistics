@@ -12,6 +12,8 @@ class DeliveryRequest(BaseModel, db.Model):
     pickup_address = db.Column(db.String(200), nullable=False)
     pickup_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     item_description = db.Column(db.String(50), nullable=False)
+    contact_person = db.Column(db.String(50), nullable=False)
+    contact_phone_number = db.Column(db.String(15), nullable=False)
     delivery_address = db.Column(db.String(200), nullable=False)
     delivery_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     delivery_instruction = db.Column(db.String(400), nullable=True)

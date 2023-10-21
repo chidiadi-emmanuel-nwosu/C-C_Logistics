@@ -1,30 +1,44 @@
 #!/usr/bin/python3
-"""index routes"""
+"""dashboard routes"""
 from uuid import uuid4
+import requests
 from flask import render_template, jsonify,request
 from flask_login import login_required
 from app.routes import app_routes
 from app.forms.request import RequestForm
-import requests
 
 @app_routes.route("/dashboard", strict_slashes=False)
+@login_required
 def dashboard():
     """dashboard routes"""
     return render_template("dashboard.html", form=RequestForm(), cache_id=str(uuid4()))
 
 @app_routes.route("/dashboard/account", strict_slashes=False)
+@login_required
 def dashboard_account():
     """my account routes"""
-    return render_template("dashboard_account.html", dashbard_title="Account Overview", cache_id=str(uuid4()))
+    return render_template("dashboard_account.html",
+                           dashbard_title="Account Overview", cache_id=str(uuid4()))
 
 @app_routes.route("/dashboard/request", strict_slashes=False)
+@login_required
 def dashboard_request():
     """request routes"""
-    return render_template("dashboard_request.html", dashbard_title="Request Delivery", form=RequestForm(), cache_id=str(uuid4()))
+    return render_template("dashboard_request.html",
+                           dashbard_title="Request Delivery",
+                           form=RequestForm(), cache_id=str(uuid4()))
 
+@app_routes.route("/dashboard/deliveries", strict_slashes=False)
+@login_required
+def dashboard_deliveries():
+    """deliveries routes"""
+    return render_template("dashboard_deliveries.html",
+                           dashbard_title="My Deliveries", cache_id=str(uuid4()))
 
 @app_routes.route('/calculate_route', methods=['POST'])
+@login_required
 def calculate_route():
+    """calculates the rdistance and time for the delivery"""
     origin = request.form.get('pickup_address')
     destination = request.form.get('delivery_address')
 
@@ -47,11 +61,4 @@ def calculate_route():
         }
 
         return jsonify(response_data)
-    else:
-        return jsonify({'error': 'Unable to calculate distance and duration'})
-
-
-@app_routes.route("/dashboard/deliveries", strict_slashes=False)
-def dashboard_deliveries():
-    """deliveries routes"""
-    return render_template("dashboard_deliveries.html", dashbard_title="My Deliveries", cache_id=str(uuid4()))
+    return jsonify({'error': 'Unable to calculate distance and duration'})

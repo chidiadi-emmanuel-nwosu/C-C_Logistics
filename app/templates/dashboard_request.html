@@ -1,50 +1,70 @@
 {% extends 'dashboard.html' %}
 {% block dashboard_content %}
-<div id="googleMap"></div>
-    <div class="request-delivery flex justify-around mt-4 space-x-2 w-full">
-        <form method="POST" enctype="multipart/form-data" class="w-full max-w-lg mx-aut p-4 border rounded-xl shadow-lg space-y-4">
+<!-- <div id="googleMap"></div> -->
+    <div class="request-delivery flex justify-around mt-4 space-x-2 w-full overflow-y-auto">
+        <form method="POST" enctype="multipart/form-data" class="w-full max-w-lg mx-aut p-4 border rounded-xl shadow-lg">
             {{ form.hidden_tag() }}
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                    <div class="flash-message px-4 py-3 text-center" role="alert" data-id="{{ category }}">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <div class="mb-4">
-                
+            <div class="">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.pickup_address.label() }}</div>
-                {{ form.pickup_address(id="from", class="form-input w-full p-2 rounded border bg-gray-100") }}
+                {{ form.pickup_address(id="pickup_address", class="form-input w-full p-2 rounded border bg-gray-100") }}
             </div>
             <div class="mb-4">
-                <div class="text-gray-600 text-sm font-semibold">{{ form.delivery_address.label() }}</div>
-                {{ form.delivery_address(id="to", class="form-input w-full p-2 rounded border bg-gray-100") }}
+                <div class="text-gray-600 text-sm font-medium flex items-center">
+                    {{ form.set_default_pickup.label() }}
+                    {{ form.set_default_pickup(id="set_default_pickup", class="ml-2 rounded border bg-gray-100") }}
+                </div>
             </div>
+
+            <div class="">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.delivery_address.label() }}</div>
+                {{ form.delivery_address(id="delivery_address", class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-medium flex items-center">
+                    {{ form.set_default_delivery.label() }}
+                    {{ form.set_default_delivery(id="set_default_delivery", class="ml-2 rounded border bg-gray-100") }}
+                </div>
+            </div>
+
             <div class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.item_description.label() }}</div>
-                {{ form.item_description(class="form-input w-full p-2 rounded border bg-gray-100") }}
+                {{ form.item_description(id="item_description", class="form-input w-full p-2 rounded border bg-gray-100") }}
             </div>
+
+            <div class="grid grid-cols-2 gap-4">
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.contact_person.label() }}</div>
+                {{ form.contact_person(id="contact_person", class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+
+            <div class="mb-4">
+                <div class="text-gray-600 text-sm font-semibold">{{ form.contact_phone_number.label() }}</div>
+                {{ form.contact_phone_number(id="contact_phone_number", class="form-input w-full p-2 rounded border bg-gray-100") }}
+            </div>
+            </div>
+
             <div class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.delivery_instruction.label() }}</div>
-                {{ form.delivery_instruction(class="form-input w-full p-2 rounded border bg-gray-100") }}
+                {{ form.delivery_instruction(id="delivery_instruction", class="form-input w-full p-2 rounded border bg-gray-100") }}
             </div>
+            
             <div class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold flex items-center">
                     {{ form.set_pickup_time.label() }}
-                    {{ form.set_pickup_time(id="set-pickup-time", class="ml-2 rounded border bg-gray-100") }}
+                    {{ form.set_pickup_time(id="set_pickup_time", class="ml-2 rounded border bg-gray-100") }}
                 </div>
             </div>
-            <div id="pickup_time" class="mb-4">
+            
+            <div id="pickup-time" class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.pickup_time.label() }}</div>
-                {{ form.pickup_time(id="pickup-time", class="form-input w-full p-2 rounded border bg-gray-100") }}
+                {{ form.pickup_time(id="pickup_time", class="form-input w-full p-2 rounded border bg-gray-100") }}
             </div>
+            
             <div class="text-center">
                 {{ form.submit(class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
             </div>
-            <button type="button" onclick="calcRoute()" class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer">Calculate Route</button>
-        <div id="output"></div>
+            <!-- <button type="button" onclick="calcRoute()" class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer">Calculate Route</button> -->
+        <!-- <div id="output"></div> -->
         </form>
         <div class="delivery_info hidden w-1/3 h-fit max-w-lg mx-auto p-4 border rounded-xl shadow-lg space-y-4">
             <h2 class="text-lg font-medium mt-4">Delivery Info</h2>
@@ -55,5 +75,9 @@
             </div>
         </div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key={API_key}&callback=createMap&libraries=places" async defer></script>
+    <script>
+        const currentUserAddress = "{{ current_user.contact_address }}";
+    </script>
+
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key={API_key}&callback=createMap&libraries=places" async defer></script> -->
 {% endblock %}
