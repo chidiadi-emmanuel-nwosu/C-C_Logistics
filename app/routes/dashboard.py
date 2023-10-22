@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """dashboard routes"""
 from uuid import uuid4
-import requests
-from flask import render_template, jsonify,request
-from flask_login import login_required
+from googlemaps import Client
+from flask import render_template, session, url_for, redirect
+from flask_login import login_required, current_user
 from app.routes import app_routes
-from app.forms.request import RequestForm
+from app.forms.request import RequestForm, CompleteRequest
+from app.models.request import DeliveryRequest
+from app import db
 
 @app_routes.route("/dashboard", strict_slashes=False)
 @login_required
@@ -20,13 +22,56 @@ def dashboard_account():
     return render_template("dashboard_account.html",
                            dashbard_title="Account Overview", cache_id=str(uuid4()))
 
-@app_routes.route("/dashboard/request", strict_slashes=False)
+@app_routes.route("/dashboard/request", methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def dashboard_request():
     """request routes"""
-    return render_template("dashboard_request.html",
-                           dashbard_title="Request Delivery",
-                           form=RequestForm(), cache_id=str(uuid4()))
+    form = RequestForm()
+    if form.validate_on_submit():
+        kwargs = {
+                'user_id': current_user.id,
+                'pickup_address': form.pickup_address.data,
+                'pickup_time': form.pickup_time.data,
+                'item_description': form.item_description.data,
+                'contact_person': form.contact_person.data,
+                'contact_phone_number': form.contact_phone_number.data,
+                'delivery_address': form.delivery_address.data,
+                'delivery_instruction': form.delivery_instruction.data,
+                }
+        session['request_form_data'] = kwargs
+        return redirect(url_for('app_routes.confirm_request'))
+
+
+    return render_template("dashboard_request.html", dashbard_title="Request Delivery",
+                           form=form, cache_id=str(uuid4()))
+
+@app_routes.route("/dashboard/request/comfirm-request", methods=['GET', 'POST'])
+@login_required
+def confirm_request():
+    """confirm delivery"""
+    gmaps = Client(key='AIzaSyBZcq4L2alxdT4eaznBBvWsa9BR266O2kc')
+
+    kwargs = session['request_form_data']
+    pickup_address = kwargs['pickup_address']
+    delivery_address = kwargs['delivery_address']
+    directions = gmaps.directions(pickup_address, delivery_address, mode="driving")
+    direction = directions[0].get('legs')[0]
+    if direction:
+        cost = calculate_cost(direction['distance']['value'])
+        kwargs['estimated_distance'] = direction['distance']['text']
+        kwargs['estimated_duration'] = direction['duration']['text']
+        kwargs['delivery_cost'] = cost
+
+    form = CompleteRequest()
+    if form.validate_on_submit():
+        new_request = DeliveryRequest(**kwargs)
+        # db.session.add(new_request)
+        # db.session.commit()
+        return "added successfully"
+
+    return render_template('confirm_request.html', dashbard_title='Confirm Delivery',
+                            form=form, direction=direction, cost=cost)
+
 
 @app_routes.route("/dashboard/deliveries", strict_slashes=False)
 @login_required
@@ -35,30 +80,7 @@ def dashboard_deliveries():
     return render_template("dashboard_deliveries.html",
                            dashbard_title="My Deliveries", cache_id=str(uuid4()))
 
-@app_routes.route('/calculate_route', methods=['POST'])
-@login_required
-def calculate_route():
-    """calculates the rdistance and time for the delivery"""
-    origin = request.form.get('pickup_address')
-    destination = request.form.get('delivery_address')
 
-    # Ensure that you have defined API_KEY with your Google Maps API Key
-    url = f'https://maps.googleapis.com/maps/api/directions/json?origin={origin}&destination={destination}&key={API_key}'
-    response = requests.get(url)
-    data = response.json()
-
-    # Check if the request was successful
-    if data['status'] == 'OK':
-        # Extract distance and duration information
-        route = data['routes'][0]
-        leg = route['legs'][0]
-        distance = leg['distance']['text']  # The distance in human-readable format
-        duration = leg['duration']['text']  # The duration in human-readable format
-
-        response_data = {
-            'distance': distance,
-            'duration': duration,
-        }
-
-        return jsonify(response_data)
-    return jsonify({'error': 'Unable to calculate distance and duration'})
+def calculate_cost(distance):
+    """calculate the price of delivery"""
+    return 10 * int(distance)

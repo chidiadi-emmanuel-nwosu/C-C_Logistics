@@ -1,0 +1,29 @@
+{% extends 'dashboard.html' %}
+{% block dashboard_content %}
+    <!-- <div class="text-center"> -->
+    <!--     <button type="button" onclick="calculateRoute()" class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer">Book Delivery</button> -->
+    <!-- </div> -->
+    
+    <div id="delivery_info" class="delivery_info h-full w-full mx-auto p-4 flex space-x-2">
+        <div class="w-1/2 h-full" id="googleMap"></div>
+        <div class="w-1/2">
+            <h2 class="text-lg font-medium mt-4">Delivery Summary</h2>
+            <div class="mt-2">
+                <p class="text-sm mb-2">Estimated Distance: {{ direction.distance.text }}</p>
+                <p class="text-sm mb-2">Estimated Delivery Time: {{ direction.duration.text }}</p>
+                <p class="text-sm mb-2">Delivery Cost: {{ cost }}</p>
+            </div>
+            <form method="POST", id="confirm_request_form">
+                {{ form.hidden_tag() }}
+                <div class="text-center">
+                    {{ form.submit(class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const pickup = {{ direction.start_location | tojson | safe }}
+        const delivery = {{ direction.end_location | tojson | safe }}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZcq4L2alxdT4eaznBBvWsa9BR266O2kc&callback=createMap&libraries=places" async defer></script>
+{% endblock %}

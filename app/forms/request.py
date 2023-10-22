@@ -30,4 +30,9 @@ class RequestForm(FlaskForm):
     set_pickup_time = BooleanField('Add a pickup time')
     pickup_time = DateTimeLocalField('Pickup Time', format='%Y-%m-%d %H:%M:%S %f',
                                 validators=[Optional()])
+    submit = SubmitField('Submit Delivery')
+
+
+class CompleteRequest(FlaskForm):
+    """complet request foam"""
     submit = SubmitField('Confirm Delivery')
