@@ -13,7 +13,6 @@ from app.routes.generate import s
 from itsdangerous import URLSafeTimedSerializer
 import secrets
 
-#s = URLSafeTimedSerializer(secrets.token_hex(16))
 
 
 @app_routes.route('/register', methods=['GET', 'POST'], strict_slashes=False)
@@ -26,10 +25,13 @@ def register():
         user_phone = User.query.filter_by(phone_number=form.phone_number.data).first()
         agent_email = DeliveryAgent.query.filter_by(email=form.email.data).first()
         agent_phone = DeliveryAgent.query.filter_by(phone_number=form.phone_number.data).first()
+        agents_license = DeliveryAgent.query.filter_by(drivers_license_number=form.drivers_license_number.data).first()
         if user_email or agent_email:
             flash('Email is already in use. Please choose a different one.', 'danger')
         elif user_phone or agent_phone:
             flash('Phone number is already in use. Please choose a different one.', 'danger')
+        elif agents_license:
+            flash('License number is already in use. Please choose a different one.', 'danger')
         elif form.register_as.data == 'user':
             # Create a new User object and add it to the database
             new = User (

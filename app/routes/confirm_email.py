@@ -21,18 +21,28 @@ s = URLSafeTimedSerializer(secrets.token_hex(16))
 def confirm_email(token):
     try:
         email = confirm_token(token)
-        user = User.query.filter_by(email=email).first_or_404()
+        user = User.query.filter_by(email=email).first()
+        rider = DeliveryAgent.query.filter_by(email=email).first()
 
-        if not user.is_email_verified:
-            flash('Changing user to true', 'success')
-            user.is_email_verified = True
-            db.session.commit()
-            flash('You have confirmed your account. Thanks!', 'success')
+        if user:
+            if not user.is_email_verified:
+                user.is_email_verified = True
+                db.session.commit()
+                flash('You have confirmed your user account. Thanks!', 'success')
+            else:
+                flash('User account already confirmed.', 'info')
+        elif rider:
+            if not rider.is_email_verified:
+                rider.is_email_verified = True
+                db.session.commit()
+                flash('You have confirmed your agent account. Thanks!', 'success')
+            else:
+                flash('Agent account already confirmed.', 'info')
+        else:
+            flash('Invalid confirmation link.', 'danger')
     except SignatureExpired:
-        return '<h1>The token is expired!</h1>'
+        flash('The token is expired!', 'danger')
     except BadData:
-        flash("Invalid confirmation link.", "danger")
-
-    
+        flash('Invalid confirmation link.', 'danger')
 
     return redirect(url_for('app_routes.login'))
