@@ -9,3 +9,4 @@ from app.routes.register import *
 from app.routes.rider import *
 from app.routes.login import *
 from app.routes.dashboard import *
+from app.routes.confirm_email import *
