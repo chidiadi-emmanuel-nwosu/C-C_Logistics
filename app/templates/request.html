@@ -4,26 +4,16 @@
         {% block confirm_request %}{% endblock %}
         <form method="POST" enctype="multipart/form-data" class="w-full max-w-lg mx-aut p-4 border rounded-xl shadow-lg" id="request_form">
             {{ form.hidden_tag() }}
-            <div class="">
+            <div class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.pickup_address.label() }}</div>
                 {{ form.pickup_address(id="pickup_address", class="form-input w-full p-2 rounded border bg-gray-100") }}
-            </div>
-            <div class="mb-4">
-                <div class="text-gray-600 text-sm font-medium flex items-center">
-                    {{ form.set_default_pickup.label() }}
-                    {{ form.set_default_pickup(id="set_default_pickup", class="ml-2 rounded border bg-gray-100") }}
-                </div>
+                <div id="pickupError" class="error-message text-red-300 text-sm"></div>
             </div>
 
-            <div class="">
+            <div class="mb-4">
                 <div class="text-gray-600 text-sm font-semibold">{{ form.delivery_address.label() }}</div>
                 {{ form.delivery_address(id="delivery_address", class="form-input w-full p-2 rounded border bg-gray-100") }}
-            </div>
-            <div class="mb-4">
-                <div class="text-gray-600 text-sm font-medium flex items-center">
-                    {{ form.set_default_delivery.label() }}
-                    {{ form.set_default_delivery(id="set_default_delivery", class="ml-2 rounded border bg-gray-100") }}
-                </div>
+                <div id="deliveryError" class="error-message text-red-300 text-sm"></div>
             </div>
 
             <div class="mb-4">
@@ -60,23 +50,12 @@
                 {{ form.pickup_time(id="pickup_time", class="form-input w-full p-2 rounded border bg-gray-100") }}
             </div>
             <div class="text-center">
-                {{ form.submit(class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
+                {{ form.submit(id="book_delivery", class="bg-orange-500 text-white p-2 rounded hover:bg-orange-700 cursor-pointer") }}
             </div>
         </form>
         <div class="hidden" id="googleMap"></div>
     </div>
-    <script>
-        const currentUserAddress = "{{ current_user.contact_address }}";
-        function initMap() {
-            const pickupAutocomplete = new google.maps.places.Autocomplete(
-                document.getElementById('pickup_address')
-            );
-            const deliveryAutocomplete = new google.maps.places.Autocomplete(
-                document.getElementById('delivery_address')
-            );
-
-        }
-    </script>
+    <script src="{{ url_for('static', filename='scripts/request.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZcq4L2alxdT4eaznBBvWsa9BR266O2kc&callback=initMap&libraries=places" async defer></script>
 
 {% endblock %}

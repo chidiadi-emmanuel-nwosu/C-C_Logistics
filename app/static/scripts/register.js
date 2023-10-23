@@ -1,16 +1,21 @@
 $(() => {
-  const $register_toggle = $('.register_toggle');
-  const $register_btn = $('.register_toggle_btn');
-  $register_toggle.on('click', () => {
-    $register_btn.toggleClass('translate-x-0 translate-x-full');
+  $reg_type = $('#register_as');
+  $agent_fields = $('#agent_fields');
+  $agent_fields.hide();
 
-    if ($register_btn.hasClass('translate-x-0')) {
-      $register_btn.text('User');
-      $('#register').attr('href', '/register/user');
+  $reg_type.on('change', () => {
+    if ($reg_type.val() === 'user') {
+      $('#register_form_header').text('Register a user account');
+      $('#drivers_license_number').removeAttr('required');
+      $('#license_expiration_date').removeAttr('required');
+      $('#license_image_file').removeAttr('required');
+      $agent_fields.hide();
     } else {
-      $register_btn.text('Rider');
-      $('#register').attr('href', '/register/rider');
+      $('#register_form_header').text('Register a delivery agent account');
+      $agent_fields.show();
+      $('#drivers_license_number').attr('required', 'required');
+      $('#license_expiration_date').attr('required', 'required');
+      $('#license_image_file').attr('required', 'required');
     }
-    console.log('hello');
   });
 });

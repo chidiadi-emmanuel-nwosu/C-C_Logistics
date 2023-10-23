@@ -1,24 +1,3 @@
-$(() => {
-  $reg_type = $('#register_as');
-  $agent_fields = $('#agent_fields');
-  $agent_fields.hide();
-
-  $reg_type.on('change', () => {
-    if ($reg_type.val() === 'user') {
-      $('#register_form_header').text('Register a user account');
-      $('#drivers_license_number').removeAttr('required');
-      $('#license_expiration_date').removeAttr('required');
-      $('#license_image_file').removeAttr('required');
-      $agent_fields.hide();
-    } else {
-      $('#register_form_header').text('Register a delivery agent account');
-      $agent_fields.show();
-      $('#drivers_license_number').attr('required', 'required');
-      $('#license_expiration_date').attr('required', 'required');
-      $('#license_image_file').attr('required', 'required');
-    }
-  });
-});
 
 $(() => {
   const category = $('.flash-message').data('id');
@@ -40,28 +19,3 @@ $(() => {
 });
 
 // dashboard form
-
-$(() => {
-  const setPickupTimeCheckbox = $('#set_pickup_time');
-  const pickupTimeLabel = $('#pickup-time');
-  const pickupTimeField = $('#pickup_time');
-
-  // Initially, check if the checkbox is checked and adjust the field
-  pickupTimeField.prop('disabled', !setPickupTimeCheckbox.is(':checked'));
-  pickupTimeLabel.hide();
-
-  // Update the field's status when the checkbox changes
-  setPickupTimeCheckbox.on('change', (e) => {
-    pickupTimeField.prop('disabled', !$(e.target).is(':checked'));
-    $(e.target).is(':checked') ? pickupTimeLabel.show() : pickupTimeLabel.hide();
-  });
-});
-
-$(() => {
-  $('#set_default_pickup').on('change', (e) => {
-    $(e.target).is(':checked') ? $('#pickup_address').val(currentUserAddress) : $('#pickup_address').val('');
-  });
-  $('#set_default_delivery').on('change', (e) => {
-    $(e.target).is(':checked') ? $('#delivery_address').val(currentUserAddress) : $('#delivery_address').val('');
-  });
-});

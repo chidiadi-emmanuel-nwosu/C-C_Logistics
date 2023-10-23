@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """init file"""
 from datetime import timedelta
-from flask import Flask, session
+from flask import Flask, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -40,6 +40,11 @@ def create_app(config_name):
             agent_model = agent.DeliveryAgent.query.get((user_id))
             return agent_model
         return user_model
+
+    # @app.errorhandler(Exception)
+    # def handle_unhandled_exception(e):
+    #     return render_template('index.html', error_message='An unexpected error occurred'), 500
+
 
     app.register_blueprint(app_routes)
 
