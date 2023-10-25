@@ -9,7 +9,7 @@ from app.models.user import User
 from app import db, bcrypt, mail
 from flask_mail import Message
 from app.routes.confirm_email import confirm_email
-from app.routes.generate import s
+from app.generate import s
 from itsdangerous import URLSafeTimedSerializer
 import secrets
 

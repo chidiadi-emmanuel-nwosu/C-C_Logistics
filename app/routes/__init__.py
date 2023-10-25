@@ -10,3 +10,6 @@ from app.routes.rider import *
 from app.routes.login import *
 from app.routes.dashboard import *
 from app.routes.confirm_email import *
+from app.routes.request_password_reset import *
+from app.routes.reset_password import *
+

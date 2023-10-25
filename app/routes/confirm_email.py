@@ -11,11 +11,8 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadData
 from flask_mail import Message
 from app.config import config
 from flask_login import login_required, current_user
-import secrets
-from app.routes.generate import confirm_token
-
-
-s = URLSafeTimedSerializer(secrets.token_hex(16))
+from app.generate import confirm_token
+from app.generate import s
 
 @app_routes.route('/confirm_email/<token>')
 def confirm_email(token):
@@ -23,7 +20,6 @@ def confirm_email(token):
         email = confirm_token(token)
         user = User.query.filter_by(email=email).first()
         rider = DeliveryAgent.query.filter_by(email=email).first()
-
         if user:
             if not user.is_email_verified:
                 user.is_email_verified = True

@@ -4,7 +4,6 @@ from flask_login import UserMixin
 from app.models.base_model import BaseModel
 from app import db
 
-
 class DeliveryAgent(BaseModel, db.Model, UserMixin):
     """rider class for agent datas"""
     first_name = db.Column(db.String(20), nullable=False)
