@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """index routes"""
 from flask import render_template, flash, redirect, url_for
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required
 from app.routes import app_routes
 from app.forms.login import LoginForm
 from app.models.user import User
@@ -19,17 +19,17 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             flash('Login user successful!', 'success')
-            return redirect(url_for('app_routes.dashboard_account'))
+            return redirect(url_for('app_routes.account'))
         if agent and bcrypt.check_password_hash(agent.password, form.password.data):
             login_user(agent)
             flash('Login agent successful!', 'success')
-            return redirect(url_for('app_routes.dashboard_account'))
+            return redirect(url_for('app_routes.account'))
         flash('Login unsuccessful. Check your email and password.', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
 @app_routes.route('/logout')
-# @login_required
+@login_required
 def logout():
     """route for user logout"""
     logout_user()
