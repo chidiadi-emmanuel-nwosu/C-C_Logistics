@@ -20,7 +20,7 @@
             </div>
             {% if current_user.is_anonymous %}
                 <div id="account-dropdown" class="origin-top-right absolute right-0 mt-40 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
-                    <div class="p-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <div class="p-2 z-50" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <div class="py-2 border-b border-gray-300">
                             <a href="{{ url_for('app_routes.login') }}" class="block px-4 py-2 text-sm hover:bg-orange-400 bg-orange-500 text-center rounded text-base text-white mb-2" role="menuitem"> 
                                 Log-in

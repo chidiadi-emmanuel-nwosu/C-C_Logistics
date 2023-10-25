@@ -38,7 +38,11 @@ $(() => {
                     <p class="text-gray-600 text-sm mb-2">Estimated duration: ${delivery.estimated_duration}</p>
                     <p class="text-gray-600 text-sm mb-2">Delivery cost: ${delivery.delivery_cost}</p>
                 </div>
-                <button class="bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button" data-order-id="${delivery.order_id}">Track</button>
+                <div class="flex space-x-4">
+                    <button class="track_delivery bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button" data-delivery-id="${delivery.id}">Track</button>
+                    ${delivery.order_status === 'pending' &&
+                    `<button class="delete_delivery text-red-500 px-2 py-1 rounded-md mt-2 underline underline-offset-2" data-delivery-id="${delivery.id}">Delete</button>`}
+                </div>
                 <div class="flex justify-end mt-2">
                     <i class="fa-solid fa-eye cursor-pointer toggle_delivery_details"></i>
                 </div>
@@ -53,11 +57,38 @@ $(() => {
       card.toggleClass('hidden block');
       toggleBtn.toggleClass('fa-eye fa-eye-slash');
     });
+
+    $('.delete_delivery').click((e) => {
+      const delivery = $(e.target).closest('.delivery');
+      const deliveryId = delivery.find('.delete_delivery').data('delivery-id');
+
+      $('#custom-confirm-popup').show();
+
+      $('#confirm-yes').click(() => {
+        $.ajax({
+          type: 'POST',
+          url: '/delete_delivery',
+          data: { delivery_id: deliveryId },
+          success: (response) => {
+            console.log(response);
+            delivery.remove();
+            $('#custom-confirm-popup').hide();
+          },
+          error: (error) => {
+            $('#custom-confirm-popup').hide();
+            alert('Error deleting the delivery.');
+          }
+        });
+      });
+
+      $('#confirm-no').click(() => $('#custom-confirm-popup').hide());
+    });
   }
 
   // Load all deliveries by default
   fetchAllDeliveries();
 
+  $('#custom-confirm-popup').hide();
   // Add click event handlers for filter buttons
   $('#show-all').click(fetchAllDeliveries);
 

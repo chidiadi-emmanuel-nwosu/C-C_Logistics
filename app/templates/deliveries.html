@@ -10,6 +10,14 @@
         <div id="delivery-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         </div>
     </div>
+    <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50" id="custom-confirm-popup">
+        <div class="bg-white rounded p-4 space-y-4 text-center">
+            <p>Are you sure you want to delete this delivery?</p>
+            <button id="confirm-yes" class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">Yes</button>
+            <button id="confirm-no" class="bg-gray-400 text-white px-4 py-2 rounded-lg">No</button>
+        </div>
+    </div>
+
     <script>
         const myDeliveries = {{ my_deliveries | tojson | safe }}
     </script>
