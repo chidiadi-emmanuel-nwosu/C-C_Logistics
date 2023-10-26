@@ -5,16 +5,19 @@ from flask import Flask, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_migrate import Migrate
 from app.config import config
+from flask_migrate import Migrate
+from flask_mail import Mail
+
 
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-login_manager.login_view = 'app_routes.login'
-login_manager.login_message_category = 'warning'
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'success'
 migrate = Migrate()
+mail = Mail()
 
 def create_app(config_name):
     """initialises app for either development or production"""
@@ -24,6 +27,15 @@ def create_app(config_name):
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     login_manager.init_app(app)
+    app.config["MAIL_SERVER"]='smtp.gmail.com'
+    app.config["MAIL_PORT"]=465
+    app.config["MAIL_USERNAME"]='chinenyeumeaku@gmail.com'
+    app.config['MAIL_PASSWORD']='nexx mpmp tusy eixg'                    #you have to give your password of gmail account
+    app.config['MAIL_USE_TLS']=False
+    app.config['MAIL_USE_SSL']=True
+    app.config['MAIL_DEFAULT_SENDER']=('Chinenye from C&C logistics', 'chinenyeumeaku@gmail.com')
+    mail.init_app(app)
+
 
     @app.before_request
     def handle_session():
@@ -34,10 +46,10 @@ def create_app(config_name):
     from app.models import user, agent
 
     @login_manager.user_loader
-    def load_user(user_id):
-        user_model = user.User.query.get((user_id))
+    def load_user(id):
+        user_model = user.User.query.get((id))
         if user_model is None:
-            agent_model = agent.DeliveryAgent.query.get((user_id))
+            agent_model = agent.DeliveryAgent.query.get((id))
             return agent_model
         return user_model
 

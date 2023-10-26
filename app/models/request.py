@@ -5,6 +5,8 @@ from app.models.base_model import BaseModel
 from app import db
 
 
+
+
 class DeliveryRequest(BaseModel, db.Model):
     """order class for order details"""
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
