@@ -70,7 +70,6 @@ $(() => {
           url: '/delete_delivery',
           data: { delivery_id: deliveryId },
           success: (response) => {
-            console.log(response);
             delivery.remove();
             $('#custom-confirm-popup').hide();
           },
