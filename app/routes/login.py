@@ -23,7 +23,7 @@ def login():
                 else:
                     login_user(user)
                     flash('Login successful!', 'success')
-                    return redirect(url_for('app_routes.dashboard_account'))
+                    return redirect(url_for('app_routes.account'))
 
             elif agent and bcrypt.check_password_hash(agent.password, form.password.data):
                 if not agent.is_email_verified:
@@ -31,7 +31,7 @@ def login():
                 else:
                     login_user(agent)
                     flash('Login successful!', 'success')
-                    return redirect(url_for('app_routes.dashboard_account'))
+                    return redirect(url_for('app_routes.account'))
 
             else:
                 flash('Login unsuccessful. Check your email and password.', 'danger')
@@ -40,7 +40,7 @@ def login():
 
 
 @app_routes.route('/logout')
-# @login_required
+@login_required
 def logout():
     """route for user logout"""
     logout_user()

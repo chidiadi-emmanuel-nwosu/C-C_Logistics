@@ -20,7 +20,7 @@
             </div>
             {% if current_user.is_anonymous %}
                 <div id="account-dropdown" class="origin-top-right absolute right-0 mt-40 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
-                    <div class="p-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <div class="p-2 z-50" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <div class="py-2 border-b border-gray-300">
                             <a href="{{ url_for('app_routes.login') }}" class="block px-4 py-2 text-sm hover:bg-orange-400 bg-orange-500 text-center rounded text-base text-white mb-2" role="menuitem"> 
                                 Log-in
@@ -34,13 +34,13 @@
             {% else %}
                 <div id="account-dropdown" class="origin-top-right absolute right-0 mt-64 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
                     <div class="py-2 px-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <a href="{{ url_for('app_routes.dashboard_account') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                        <a href="{{ url_for('app_routes.account') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
                             <i class="fas fa-user mr-1"></i> My Account
                         </a>
-                        <a href="{{ url_for('app_routes.dashboard_request') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                        <a href="{{ url_for('app_routes.request_delivery') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
                             <i class="fas fa-motorcycle mr-1"></i> Request Delivery
                         </a>
-                        <a href="{{ url_for('app_routes.dashboard_deliveries') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                        <a href="{{ url_for('app_routes.delivery') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
                             <i class="fas fa-box mr-1"></i> My Deliveries
                         </a>
                         <div class="mt-6 text-center border-t border-bg-gray-300">
@@ -54,4 +54,5 @@
         </div>
     </nav>
 </header>
+<script src="{{ url_for('static', filename='scripts/header.js') }}" defer></script>
 
