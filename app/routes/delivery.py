@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""delivery routes"""
 from uuid import uuid4
 from flask import render_template, jsonify, request, flash
 from flask_login import login_required, current_user
@@ -6,14 +7,25 @@ from app.routes import app_routes
 from app.models.request import DeliveryRequest
 from app import db
 
-@app_routes.route("/dashboard/deliveries")
+
+@app_routes.route("/dashboard/deliveries",)
 @login_required
 def delivery():
     """deliveries routes"""
-    deliveries = DeliveryRequest.query.filter_by(user_id=current_user.id).all()
+    if current_user.__class__.__name__ == "User":
+        deliveries = DeliveryRequest.query.filter_by(
+                user_id=current_user.id).all()
+    else:
+        deliveries = DeliveryRequest.query.filter_by(
+                agent_id=current_user.id).all()
     my_deliveries = [delivery.to_dict() for delivery in deliveries]
-    return render_template("deliveries.html", my_deliveries=my_deliveries,
-                           dashbard_title="My Deliveries", cache_id=str(uuid4()))
+    return render_template(
+            "deliveries.html",
+            my_deliveries=my_deliveries,
+            dashboard_title="My Deliveries",
+            cache_id=str(uuid4())
+            )
+
 
 @app_routes.route("/delete_delivery", methods=['POST'])
 @login_required
@@ -26,7 +38,22 @@ def delete_delivery():
         try:
             db.session.delete(delivery_)
             db.session.commit()
+            flash('hello world')
             return jsonify({'success': True})
         except Exception as e:
             flash('Failed to delete delivery')
     return jsonify({'success': False})
+
+
+@app_routes.route("/earnings", methods=['GET', 'POST'])
+@login_required
+def earnings():
+    """accept delivery route"""
+    deliveries = DeliveryRequest.query.filter_by(order_status="pending").all()
+    my_deliveries = [delivery.to_dict() for delivery in deliveries]
+    return render_template(
+            "deliveries.html",
+            my_deliveries=my_deliveries,
+            dashboard_title="Accept Delivery",
+            cache_id=str(uuid4())
+            )

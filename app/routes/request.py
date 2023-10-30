@@ -28,8 +28,9 @@ def request_delivery():
                 }
         return redirect(url_for('app_routes.confirm_request'))
 
-    return render_template("request.html", dashbard_title="Request Delivery",
+    return render_template("request.html", dashboard_title="Request Delivery",
                            form=form, cache_id=str(uuid4()))
+
 
 @app_routes.route("/dashboard/request/comfirm-request", methods=['GET', 'POST'])
 @login_required
@@ -60,10 +61,17 @@ def confirm_request():
         new_request = DeliveryRequest(**kwargs)
         db.session.add(new_request)
         db.session.commit()
-        return render_template('confirm_success.html', dashbard_title="Delivery Status")
+        return render_template(
+                'confirm_success.html',
+                dashboard_title="Delivery Status"
+                )
 
-    return render_template('confirm_request.html', dashbard_title='Confirm Delivery',
-                            form=form, direction=direction, cost=cost)
+    return render_template(
+            'confirm_request.html',
+            dashboard_title='Confirm Delivery',
+            form=form, direction=direction, cost=cost
+            )
+
 
 def calculate_cost(distance):
     """calculate the price of delivery"""

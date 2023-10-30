@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from app.models.base_model import BaseModel
 from app import db
 
+
 class DeliveryAgent(BaseModel, db.Model, UserMixin):
     """rider class for agent datas"""
     first_name = db.Column(db.String(20), nullable=False)
@@ -15,6 +16,16 @@ class DeliveryAgent(BaseModel, db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     phone_number = db.Column(db.String(15), nullable=False)
     contact_address = db.Column(db.String(200), nullable=False)
-    drivers_license_number = db.Column(db.String(10), nullable=False, unique=True)
+    drivers_license_number = db.Column(db.String(10),
+                                       nullable=False, unique=True)
     license_expiration_date = db.Column(db.Date, nullable=False)
     license_image_file = db.Column(db.LargeBinary, nullable=False)
+
+    def to_dict(self, include_related=True):
+        result = super().to_dict()
+
+        if include_related and hasattr(self, 'deliveries'):
+            result['deliveries'] = [delivery.to_dict(include_related=False)
+                                    for delivery in self.deliveries]
+
+        return result

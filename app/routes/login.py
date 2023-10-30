@@ -6,6 +6,7 @@ from app.models.user import User
 from app.models.agent import DeliveryAgent
 from app import bcrypt
 
+
 @app_routes.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -17,24 +18,29 @@ def login():
         if not user and not agent:
             flash('Login unsuccessful. User not found.', 'danger')
         else:
-            if user and bcrypt.check_password_hash(user.password, form.password.data):
+            if user and bcrypt.check_password_hash(user.password,
+                                                   form.password.data):
                 if not user.is_email_verified:
-                    flash('Please confirm your email before logging in.', 'danger')
+                    flash('Please confirm your email before logging in.',
+                          'warning')
                 else:
                     login_user(user)
                     flash('Login successful!', 'success')
                     return redirect(url_for('app_routes.account'))
 
-            elif agent and bcrypt.check_password_hash(agent.password, form.password.data):
+            elif agent and bcrypt.check_password_hash(agent.password,
+                                                      form.password.data):
                 if not agent.is_email_verified:
-                    flash('Please confirm your email before logging in.', 'danger')
+                    flash('Please confirm your email before logging in.',
+                          'warning')
                 else:
                     login_user(agent)
                     flash('Login successful!', 'success')
                     return redirect(url_for('app_routes.account'))
 
             else:
-                flash('Login unsuccessful. Check your email and password.', 'danger')
+                flash('Login unsuccessful. Check your email and password.',
+                      'danger')
 
     return render_template('login.html', title='Login', form=form)
 

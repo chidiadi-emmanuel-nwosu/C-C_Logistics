@@ -12,10 +12,14 @@ from app import db
 @login_required
 def account():
     """my account routes"""
-    return render_template("account.html", dashbard_title="Account Overview", cache_id=str(uuid4()))
+    return render_template(
+            "account.html",
+            dashboard_title="Account Overview",
+            cache_id=str(uuid4())
+            )
 
 
-@app_routes.route('/dashboard/account/edit', methods=['GET','POST'])
+@app_routes.route('/dashboard/account/edit', methods=['GET', 'POST'])
 @login_required
 def update_account():
     """edit the user account"""
@@ -32,5 +36,9 @@ def update_account():
         db.session.commit()
         return redirect(url_for('app_routes.account'))
 
-    return render_template('update_account.html', form=form,
-                           dashbard_title='Update Account', cache_id=str(uuid4()))
+    return render_template(
+            'update_account.html',
+            form=form,
+            dashboard_title='Update Account',
+            cache_id=str(uuid4())
+            )

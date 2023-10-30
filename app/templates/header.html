@@ -32,17 +32,29 @@
                     </div>
                 </div>
             {% else %}
-                <div id="account-dropdown" class="origin-top-right absolute right-0 mt-64 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+                <div id="account-dropdown" class="origin-top-right absolute right-0 mt-72 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
                     <div class="py-2 px-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <a href="{{ url_for('app_routes.account') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
                             <i class="fas fa-user mr-1"></i> My Account
                         </a>
+                        {% if current_user.__class__.__name__ == 'User' %}
                         <a href="{{ url_for('app_routes.request_delivery') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
                             <i class="fas fa-motorcycle mr-1"></i> Request Delivery
                         </a>
                         <a href="{{ url_for('app_routes.delivery') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
                             <i class="fas fa-box mr-1"></i> My Deliveries
                         </a>
+                        {% else %}
+                        <a href="{{ url_for('app_routes.accept_delivery') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                            <i class="fas fa-motorcycle mr-1"></i> Accept Delivery
+                        </a>
+                        <a href="{{ url_for('app_routes.delivery') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                            <i class="fas fa-box mr-1"></i> My Deliveries
+                        </a>
+                        <a href="{{ url_for('app_routes.earnings') }}" class="block px-2 py-2 text-gray-700 hover:bg-gray-100 text-sm mb-2" role="menuitem">
+                            <i class="fas fa-money-check-dollar mr-1"></i> Earnings
+                        </a>
+                        {% endif %}
                         <div class="mt-6 text-center border-t border-bg-gray-300">
                             <a href="{{ url_for('app_routes.logout') }}" class="block px-4 py-2 text-orange-600 hover:bg-orange-100 text-base" role="menuitem">
                                 Log-out

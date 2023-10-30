@@ -1,44 +1,37 @@
 #!/usr/bin/python3
 """index routes"""
-from datetime import datetime
-from flask import render_template, flash, url_for, redirect, request
+from itsdangerous import SignatureExpired, BadData
+from flask import flash, url_for, redirect
 from app.routes import app_routes
-from app.forms.register import RegistrationForm
 from app.models.agent import DeliveryAgent
 from app.models.user import User
-from app import db, bcrypt, mail
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadData
-from flask_mail import Message
-from app.config import config
-from flask_login import login_required, current_user
-from app.generate import confirm_token
-from app.generate import s
+from app import db
+from app.config import serialize_token
+
 
 @app_routes.route('/confirm_email/<token>')
 def confirm_email(token):
+    """confirms email address wit sent out token"""
+
     try:
-        email = confirm_token(token)
+        email = serialize_token.loads(token, salt='email-confirm',
+                                      max_age=10000)
         user = User.query.filter_by(email=email).first()
-        rider = DeliveryAgent.query.filter_by(email=email).first()
-        if user:
-            if not user.is_email_verified:
-                user.is_email_verified = True
+        agent = DeliveryAgent.query.filter_by(email=email).first()
+        get_user = user if user else agent if agent else None
+
+        if get_user:
+            if not get_user.is_email_verified:
+                get_user.is_email_verified = True
                 db.session.commit()
-                flash('You have confirmed your user account. Thanks!', 'success')
+                flash('Email verified. You are now able to login', 'success')
             else:
-                flash('User account already confirmed.', 'info')
-        elif rider:
-            if not rider.is_email_verified:
-                rider.is_email_verified = True
-                db.session.commit()
-                flash('You have confirmed your agent account. Thanks!', 'success')
-            else:
-                flash('Agent account already confirmed.', 'info')
-        else:
-            flash('Invalid confirmation link.', 'danger')
-    except SignatureExpired:
-        flash('The token is expired!', 'danger')
-    except BadData:
-        flash('Invalid confirmation link.', 'danger')
+                flash('account already confirmed.', 'info')
+    except [SignatureExpired, BadData]:
+        flash('Invalid confirmation link or token is expired. Register again.',
+              'danger')
+        db.session.delete(get_user)
+        db.session.commit()
+        return redirect(url_for('app_routes.register'))
 
     return redirect(url_for('app_routes.login'))

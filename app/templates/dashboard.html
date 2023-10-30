@@ -6,12 +6,24 @@
             <a href="{{ url_for('app_routes.account') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-mormal mb-2 {% if request.path == url_for('app_routes.account') %} bg-gray-100 {% endif %}" role="menuitem">
                 <i class="fas fa-user mr-2"></i> My Account
             </a>
-            <a href="{{ url_for('app_routes.request_delivery') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.request_delivery') %} bg-gray-100 {% endif %}" role="menuitem">
-                <i class="fas fa-motorcycle mr-2"></i> Request Delivery
-            </a>
-            <a href="{{ url_for('app_routes.delivery') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.delivery') %} bg-gray-100 {% endif %}" role="menuitem">
-                <i class="fas fa-box mr-2"></i> My Deliveries
-            </a>
+            {% if current_user.__class__.__name__ == 'User' %}
+                <a href="{{ url_for('app_routes.request_delivery') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.request_delivery') %} bg-gray-100 {% endif %}" role="menuitem">
+                    <i class="fas fa-motorcycle mr-2"></i> Request Delivery
+                </a>
+                <a href="{{ url_for('app_routes.delivery') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.delivery') %} bg-gray-100 {% endif %}" role="menuitem">
+                    <i class="fas fa-box mr-2"></i> My Deliveries
+                </a>
+            {% else %}
+                <a href="{{ url_for('app_routes.accept_delivery') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.accept_delivery') %} bg-gray-100 {% endif %}" role="menuitem">
+                    <i class="fas fa-motorcycle mr-2"></i> Accept Delivery
+                </a>
+                <a href="{{ url_for('app_routes.delivery') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.delivery') %} bg-gray-100 {% endif %}" role="menuitem">
+                    <i class="fas fa-box mr-2"></i> My Deliveries
+                </a>
+                <a href="{{ url_for('app_routes.earnings') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-base mb-2 {% if request.path == url_for('app_routes.delivery') %} bg-gray-100 {% endif %}" role="menuitem">
+                    <i class="fas fa-money-check-dollar mr-2"></i> Earnings
+                </a>
+            {% endif %}
             <div class="mt-10 text-center border-t border-bg-gray-300">
                 <a href="{{ url_for('app_routes.logout') }}" class="block px-4 py-2 text-orange-600 hover:bg-orange-100 text-base" role="menuitem">
                     Log-out
@@ -20,7 +32,7 @@
         </div>
         <div class="dashboard-content bg-white shadow rounded text-black w-full w-/4 px-4 pb-2 overflow-y-auto">
             <div class="dashboard-content-header border-b border-bg-gray-300 bg-white py-2">
-                <h2 class="text-2xl font-medium mb-1 mt-1">{{ dashbard_title }}</h2>
+                <h2 class="text-2xl font-medium mb-1 mt-1">{{ dashboard_title }}</h2>
             </div>
             {% block dashboard_content %}
             {% endblock %}

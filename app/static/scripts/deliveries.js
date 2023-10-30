@@ -1,16 +1,16 @@
 $(() => {
-// Function to fetch and display pending deliveries
+  // Function to fetch and display pending deliveries
   const fetchAllDeliveries = () => {
     displayDeliveries(myDeliveries);
   };
 
   const fetchPendingDeliveries = () => {
-    displayDeliveries(myDeliveries.filter((e) => e.order_status === 'pending'));
+    displayDeliveries(myDeliveries.filter((e) => e.order_status !== 'delivered'));
   };
 
   // Function to fetch and display fulfilled deliveries
   function fetchFulfilledDeliveries () {
-    displayDeliveries(myDeliveries.filter((e) => e.order_status === 'completed'));
+    displayDeliveries(myDeliveries.filter((e) => e.order_status === 'delivered'));
   }
 
   // Function to fetch and display deliveries as cards
@@ -28,7 +28,9 @@ $(() => {
             <div class="delivery border border-gray-300 shadow rounded p-4 h-fit">
                 <h2 class="font-medium text-base mb-2">From: ${delivery.pickup_address}</h2>
                 <p class="text-gray-600 text-sm mb-2">To: ${delivery.delivery_address}</p>
-                <p class="text-gray-600 text-sm mb-2">Delivery Agent: ${delivery.agent}</p>
+                     ${currentUser === 'User'
+                ? `<p class="text-gray-600 text-sm mb-2">Delivery Agent: ${delivery.agent ? delivery.agent.first_name : ''} ${delivery.agent ? delivery.agent.last_name : ''}</p> `
+: `<p class="text-gray-600 text-sm mb-2">Parcel Owner: ${delivery.user.first_name} ${delivery.user.last_name}</p> `}
                 <p class="text-gray-600 text-sm mb-2">Status: ${delivery.order_status}</p>
                 <div class="additional_delivery_details hidden mt-2">
                     <p class="text-gray-600 text-sm mb-2">Contact person: ${delivery.contact_person}</p>
@@ -39,9 +41,12 @@ $(() => {
                     <p class="text-gray-600 text-sm mb-2">Delivery cost: ${delivery.delivery_cost}</p>
                 </div>
                 <div class="flex space-x-4">
-                    <button class="track_delivery bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button" data-delivery-id="${delivery.id}">Track</button>
-                    ${delivery.order_status === 'pending' &&
-                    `<button class="delete_delivery text-red-500 px-2 py-1 rounded-md mt-2 underline underline-offset-2" data-delivery-id="${delivery.id}">Delete</button>`}
+                     ${currentUser === 'User'
+                    ? `<button class='track_delivery bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button' data-delivery-id='${delivery.id}'>Track</button>`
+: ''}
+                    ${delivery.order_status === 'pending'
+                    ? `<button class="delete_delivery text-red-500 px-2 py-1 rounded-md mt-2 underline underline-offset-2" data-delivery-id="${delivery.id}">Delete</button>`
+: ''}
                 </div>
                 <div class="flex justify-end mt-2">
                     <i class="fa-solid fa-eye cursor-pointer toggle_delivery_details"></i>

@@ -1,0 +1,33 @@
+{% extends 'dashboard.html' %}
+{% block dashboard_content %}
+    <div class="w-full mt-2">
+        <!-- Buttons for toggling between delivery status -->
+        <div id="delivery-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for delivery in my_deliveries %}
+            <div class="delivery border border-gray-300 shadow rounded p-4 h-fit">
+                <h2 class="font-medium text-base mb-2">From: {{ delivery.pickup_address }}</h2>
+                <p class="text-gray-600 text-sm mb-2">To: {{ delivery.delivery_address }}</p>
+                <p class="text-gray-600 text-sm mb-2">Owner's Name: {{ delivery.user.first_name }} {{ delivery.user.last_name }}</p>
+                <p class="text-gray-600 text-sm mb-2">Status: {{ delivery.order_status }}</p>
+                <div class="additional_delivery_details hidden mt-2">
+                    <p class="text-gray-600 text-sm mb-2">Contact person: {{ delivery.contact_person }}</p>
+                    <p class="text-gray-600 text-sm mb-2">Contact phone number: {{ delivery.contact_phone_number }}</p>
+                    <p class="text-gray-600 text-sm mb-2">Delivery Instructions: {{ delivery.delivery_instruction }}</p>
+                    <p class="text-gray-600 text-sm mb-2">Estimated distance: {{ delivery.estimated_distance }}</p>
+                    <p class="text-gray-600 text-sm mb-2">Estimated duration: {{ delivery.estimated_duration }}</p>
+                    <p class="text-gray-600 text-sm mb-2">Delivery cost: {{ delivery.delivery_cost }}</p>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="accept_delivery bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button" data-delivery-id="{{ delivery.id }}">Accept Delivery</button>
+                </div>
+                <div class="flex justify-end mt-2">
+                    <i class="fa-solid fa-eye cursor-pointer toggle_delivery_details"></i>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not my_deliveries %} <p>No open delivery request found</p> {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scripts/accept.js') }}"></script>
+{% endblock %}
