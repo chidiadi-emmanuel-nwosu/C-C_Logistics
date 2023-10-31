@@ -8,7 +8,7 @@ from flask_login import LoginManager
 from app.config import config
 from flask_migrate import Migrate
 from flask_mail import Mail
-
+import os
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -29,12 +29,12 @@ def create_app(config_name):
     login_manager.init_app(app)
     app.config["MAIL_SERVER"] = 'smtp.gmail.com'
     app.config["MAIL_PORT"] = 465
-    app.config["MAIL_USERNAME"] = 'chinenyeumeaku@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'nexx mpmp tusy eixg'
+    app.config["MAIL_USERNAME"] = 'cclogisticsapp@gmail.com'
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_DEFAULT_SENDER'] = ('Chinenye from C&C logistics',
-                                         'chinenyeumeaku@gmail.com')
+                                         'cclogisticsapp@gmail.com')
     mail.init_app(app)
 
     @app.before_request

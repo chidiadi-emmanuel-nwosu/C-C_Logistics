@@ -14,3 +14,5 @@ from app.routes.rider import *
 from app.routes.login import *
 from app.routes.confirm_email import *
 from app.routes.reset_password import *
+
+
