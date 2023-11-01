@@ -11,12 +11,19 @@ from app.models.user import User
 from app.models.agent import DeliveryAgent
 from app import db
 import notify2
+import os
+from app.config import configure
+from flask import current_app
+
 
 @app_routes.route("/dashboard/request", methods=['GET', 'POST'])
 @login_required
 def request_delivery():
     """request routes"""
+    api_key = current_app.config['API_key']
+    gmaps = Client(key=api_key)
     form = RequestForm()
+    
     if form.validate_on_submit():
         session['request_form_data'] = {
             'user_id': current_user.id,
@@ -30,14 +37,14 @@ def request_delivery():
         }
         return redirect(url_for('app_routes.confirm_request'))
 
-    return render_template("request.html", dashboard_title="Request Delivery", form=form, cache_id=str(uuid4()))
+    return render_template("request.html", dashboard_title="Request Delivery", api_key=api_key, form=form, cache_id=str(uuid4()))
 
 @app_routes.route("/dashboard/request/comfirm-request", methods=['GET', 'POST'])
 @login_required
 def confirm_request():
     """confirm delivery"""
-    gmaps = Client(key='AIzaSyBZcq4L2alxdT4eaznBBvWsa9BR266O2kc')
-
+    api_key = current_app.config['API_key']
+    gmaps = Client(key=api_key)
     kwargs = session['request_form_data']
     pickup_address = kwargs['pickup_address']
     delivery_address = kwargs['delivery_address']
@@ -85,6 +92,7 @@ def confirm_request():
         )
     return render_template(
         'confirm_request.html',
+        api_key=api_key,
         dashboard_title='Confirm Delivery',
         form=form,
         direction=direction,
