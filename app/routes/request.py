@@ -7,21 +7,16 @@ from flask_login import login_required, current_user
 from app.routes import app_routes
 from app.forms.request import RequestForm, CompleteRequest
 from app.models.request import DeliveryRequest
-from app.models.user import User
-from app.models.agent import DeliveryAgent
 from app import db
-import os
-from app.config import configure
-from flask import current_app
 
 
 @app_routes.route("/dashboard/request", methods=['GET', 'POST'])
 @login_required
 def request_delivery():
     """request routes"""
-    api_key = current_app.config['API_key']
+    api_key = current_app.config['API_KEY']
     form = RequestForm()
-    
+
     if form.validate_on_submit():
         session['request_form_data'] = {
             'user_id': current_user.id,
@@ -35,7 +30,11 @@ def request_delivery():
         }
         return redirect(url_for('app_routes.confirm_request'))
 
-    return render_template("request.html", dashboard_title="Request Delivery", api_key=api_key, form=form, cache_id=str(uuid4()))
+    return render_template(
+            "request.html",
+            dashboard_title="Request Delivery",
+            api_key=api_key, form=form, cache_id=str(uuid4())
+            )
 
 @app_routes.route("/dashboard/request/comfirm-request", methods=['GET', 'POST'])
 @login_required

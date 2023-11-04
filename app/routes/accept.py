@@ -8,7 +8,7 @@ from app.routes import app_routes
 from app.models.agent import DeliveryAgent
 from app.models.request import DeliveryRequest
 from app.models.user import User
-from app import db,mail
+from app import db, mail
 
 
 @app_routes.route("/dashboard/accept-delivery", methods=['GET', 'POST'])
@@ -29,8 +29,8 @@ def accept_delivery():
                 user = User.query.filter_by(id=user_id).first()
                 agent = DeliveryAgent.query.filter_by(id=agent_id).first()
                 email = user.email
-                msg = Message('Order accepted', recipients=[email])
-                msg.body = f"""Your delivery request has been accepted and a delivery agent is on his way.
+                msg = Message('Delivery request accepted', recipients=[email])
+                msg.body = f"""Your delivery request with id {delivery_data.id} has been accepted and a delivery agent is on his way.
                                 Agent name: {agent.first_name} {agent.last_name}.
                                 Agent phone number: {agent.phone_number}.
                             """
