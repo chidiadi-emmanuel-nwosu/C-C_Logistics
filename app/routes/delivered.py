@@ -25,9 +25,9 @@ def delivered():
             email = user.email
             msg = Message('Parcel Delivered', recipients=[email])
             msg.body = f"""Your parcel with id {delivery_data.id} has been delivered successfully.
-                            Contact person: {delivery_data.contact_person}.
-                            Contact phone number: {delivery_data.contact_phone_number}.
-                        """
+
+Contact person: {delivery_data.contact_person}.
+Contact phone number: {delivery_data.contact_phone_number}."""
             mail.send(msg)
             flash("An email has been sent to the user", 'success')
 

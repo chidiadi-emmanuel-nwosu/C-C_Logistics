@@ -31,9 +31,9 @@ def accept_delivery():
                 email = user.email
                 msg = Message('Delivery Request Accepted', recipients=[email])
                 msg.body = f"""Your delivery request with id {delivery_data.id} has been accepted and a delivery agent is on his way.
-                                Agent name: {agent.first_name} {agent.last_name}.
-                                Agent phone number: {agent.phone_number}.
-                            """
+
+                Agent name: {agent.first_name} {agent.last_name}.
+                Agent phone number: {agent.phone_number}."""
                 mail.send(msg)
                 flash("An email has been sent to the user", 'success')
 
