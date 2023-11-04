@@ -23,7 +23,7 @@ def delivered():
             user_id = delivery_data.user_id
             user = User.query.filter_by(id=user_id).first()
             email = user.email
-            msg = Message('Order accepted', recipients=[email])
+            msg = Message('Parcel Delivered', recipients=[email])
             msg.body = f"""Your parcel with id {delivery_data.id} has been delivered successfully.
                             Contact person: {delivery_data.contact_person}.
                             Contact phone number: {delivery_data.contact_phone_number}.
@@ -33,5 +33,5 @@ def delivered():
 
             return jsonify({'success': True})
         except Exception as e:
-            flash('Error occured')
+            flash(f'could not send delivered email. Error: {e}', 'danger')
     return jsonify({'success': False})

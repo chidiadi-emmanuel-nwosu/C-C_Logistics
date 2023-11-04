@@ -29,7 +29,7 @@ def accept_delivery():
                 user = User.query.filter_by(id=user_id).first()
                 agent = DeliveryAgent.query.filter_by(id=agent_id).first()
                 email = user.email
-                msg = Message('Delivery request accepted', recipients=[email])
+                msg = Message('Delivery Request Accepted', recipients=[email])
                 msg.body = f"""Your delivery request with id {delivery_data.id} has been accepted and a delivery agent is on his way.
                                 Agent name: {agent.first_name} {agent.last_name}.
                                 Agent phone number: {agent.phone_number}.
