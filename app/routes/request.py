@@ -2,7 +2,7 @@
 """dashboard routes"""
 from uuid import uuid4
 from googlemaps import Client
-from flask import render_template, session, url_for, redirect, flash
+from flask import render_template, session, url_for, redirect, flash, current_app
 from flask_login import login_required, current_user
 from app.routes import app_routes
 from app.forms.request import RequestForm, CompleteRequest
@@ -10,7 +10,6 @@ from app.models.request import DeliveryRequest
 from app.models.user import User
 from app.models.agent import DeliveryAgent
 from app import db
-import notify2
 import os
 from app.config import configure
 from flask import current_app
@@ -21,7 +20,6 @@ from flask import current_app
 def request_delivery():
     """request routes"""
     api_key = current_app.config['API_key']
-    gmaps = Client(key=api_key)
     form = RequestForm()
     
     if form.validate_on_submit():
@@ -68,24 +66,6 @@ def confirm_request():
         new_request = DeliveryRequest(**kwargs)
         db.session.add(new_request)
         db.session.commit()
-        delivery_data = DeliveryRequest.query.filter_by(id=new_request.id).first()
-        if delivery_data:
-            delivery_data.user_id = current_user.id
-            agent_id = delivery_data.agent_id
-            rider = DeliveryAgent.query.filter_by(id=agent_id).first()
-
-            if rider:
-                # Send the notification
-                notify2.init("C&C logistics")
-                message = f"""Your rider is on his way. These are his details {rider.first_name} {rider.last_name}.
-                You can reach them with this phone number: {rider.phone_number}."""
-                n = notify2.Notification("Order notification", message)
-                n.show()
-            else:
-                notify2.init("C&C logistics")
-                message = "Your order request has been received, but it hasn't been accepted by a rider yet. You will be notified by email when a rider accepts it."
-                n = notify2.Notification("Order notification", message)
-                n.show()
         return render_template(
             'confirm_success.html',
             dashboard_title="Delivery Status"
@@ -102,4 +82,4 @@ def confirm_request():
 
 def calculate_cost(distance):
     """calculate the price of delivery"""
-    return 10 * int(distance)
+    return 500 + 1.5 * int(distance)
