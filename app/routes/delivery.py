@@ -43,17 +43,3 @@ def delete_delivery():
         except Exception as e:
             flash('Failed to delete delivery')
     return jsonify({'success': False})
-
-
-@app_routes.route("/earnings", methods=['GET', 'POST'])
-@login_required
-def earnings():
-    """accept delivery route"""
-    deliveries = DeliveryRequest.query.filter_by(order_status="pending").all()
-    my_deliveries = [delivery.to_dict() for delivery in deliveries]
-    return render_template(
-            "deliveries.html",
-            my_deliveries=my_deliveries,
-            dashboard_title="Accept Delivery",
-            cache_id=str(uuid4())
-            )

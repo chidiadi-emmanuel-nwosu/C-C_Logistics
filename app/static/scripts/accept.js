@@ -1,4 +1,5 @@
 $(() => {
+  console.log('hello');
   const acceptBtn = $('.accept_delivery');
   acceptBtn.click((e) => {
     const delivery = $(e.target).closest('.delivery');

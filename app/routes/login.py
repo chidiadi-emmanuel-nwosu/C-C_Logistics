@@ -26,7 +26,7 @@ def login():
                 else:
                     login_user(user)
                     flash('Login successful!', 'success')
-                    return redirect(url_for('app_routes.account'))
+                    return redirect(url_for('app_routes.request_delivery'))
 
             elif agent and bcrypt.check_password_hash(agent.password,
                                                       form.password.data):
@@ -36,7 +36,7 @@ def login():
                 else:
                     login_user(agent)
                     flash('Login successful!', 'success')
-                    return redirect(url_for('app_routes.account'))
+                    return redirect(url_for('app_routes.accept_delivery'))
 
             else:
                 flash('Login unsuccessful. Check your email and password.',

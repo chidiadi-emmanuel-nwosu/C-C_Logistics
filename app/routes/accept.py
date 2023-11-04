@@ -35,6 +35,6 @@ def accept_delivery():
             "accept.html",
             my_deliveries=my_deliveries,
             users=users,
-            dashboard_title="My Deliveries",
+            dashboard_title="Accept Delivery Request",
             cache_id=str(uuid4())
             )

@@ -5,12 +5,12 @@ $(() => {
   };
 
   const fetchPendingDeliveries = () => {
-    displayDeliveries(myDeliveries.filter((e) => e.order_status !== 'delivered'));
+    displayDeliveries(myDeliveries.filter((e) => e.order_status !== 'Delivered'));
   };
 
   // Function to fetch and display fulfilled deliveries
   function fetchFulfilledDeliveries () {
-    displayDeliveries(myDeliveries.filter((e) => e.order_status === 'delivered'));
+    displayDeliveries(myDeliveries.filter((e) => e.order_status === 'Delivered'));
   }
 
   // Function to fetch and display deliveries as cards
@@ -41,9 +41,10 @@ $(() => {
                     <p class="text-gray-600 text-sm mb-2">Delivery cost: ${delivery.delivery_cost}</p>
                 </div>
                 <div class="flex space-x-4">
-                     ${currentUser === 'User'
+                     ${currentUser === 'User' && delivery.order_status !== 'Delivered'
                     ? `<button class='track_delivery bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button' data-delivery-id='${delivery.id}'>Track</button>`
-: ''}
+: currentUser === 'DeliveryAgent' && delivery.order_status !== 'Delivered' ? `<button class='delivered bg-orange-500 text-white px-2 py-1 rounded-md mt-2 track-button' data-delivery-id='${delivery.id}'>Parcel delivered</button>` : ''
+}
                     ${delivery.order_status === 'pending'
                     ? `<button class="delete_delivery text-red-500 px-2 py-1 rounded-md mt-2 underline underline-offset-2" data-delivery-id="${delivery.id}">Delete</button>`
 : ''}

@@ -22,6 +22,8 @@
     <script src="{{ url_for('static', filename='scripts/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/jquery-ui.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/base.js') }}"></script>
+    <!-- <script type="module" src="{{ url_for('static', filename='scripts/fcm.js') }}"></script> -->
+
 </head>
 <body>
     <div class="container mx-auto max-w-screen-xl">
@@ -40,7 +42,11 @@
             {% endblock %}
         </main>
     </div>
-
-
+    <div class="bg-green-100 border-green-500 text-green-700"></div>
+    <div class="bg-blue-100 border-blue-500 text-blue-700"></div>
+    <div class="bg-yellow-100 border-yellow-500 text-yellow-700"></div>
+    <div class="bg-red-100 border-red-500 text-red-700"></div>
 </body>
+<script type="module">
+</script>
 </html>
