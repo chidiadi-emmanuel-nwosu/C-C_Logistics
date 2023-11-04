@@ -17,7 +17,6 @@
             <button id="confirm-no" class="bg-gray-400 text-white px-4 py-2 rounded-lg">No</button>
         </div>
     </div>
-
     <script>
         const myDeliveries = {{ my_deliveries | tojson | safe }}
         const currentUser = "{{ current_user.__class__.__name__ }}"
