@@ -42,8 +42,8 @@ To get started with this project, follow the steps below:
 	API_key=YOUR_API_KEY
 	```
 ### Start the application.
-	```sh
-	python3 -m app.run_app
+   ```sh
+    python3 -m app.run_app
 	```
 
 ### Contributing
@@ -54,4 +54,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Authors
 - Chidiadi Nwosu [Github](https://github.com/chidiadi-emmanuel-nwosu/) / [Linkedin](https://chidiadi-nwosu) / [Email](chidiadi.emmanuel.nwosu@gmail.com) 
-- Chinenye Nmoh 
+- Chinenye Nmoh [Github](https://github.com/ChinenyeNmoh/) / [Linkedin](https://www.linkedin.com/in/chinenye-nmoh-88479699/) / [Email](chinenyeumeaku@gmail.com) 
