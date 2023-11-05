@@ -28,7 +28,7 @@ To get started with this project, follow the steps below:
 
 - You will need a Google Maps API key.
 - Set your email password credentials as `MAIL_PASSWORD` in the `.env` file.
-- set your Google Maps API key as `API_key'
+- set your Google Maps API key as `API_key`
 
 ### Installation
 
@@ -45,7 +45,7 @@ To get started with this project, follow the steps below:
 	MAIL_PASSWORD=YOUR_MAIL_PASSWORD
 	API_key=YOUR_API_KEY
 	```
-4. Start the application.
+### Start the application.
 	```sh
 	python3 -m app.run_app
 	```
@@ -56,12 +56,7 @@ We welcome contributions from the community. If you have suggestions to make thi
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Contact
-Your Name
+## Authors
+- Chidiadi Nwosu [Github](https://github.com/chidiadi-emmanuel-nwosu/) / [Linkedin](https://chidiadi-nwosu) / [Email](chidiadi.emmanuel.nwosu@gmail.com) 
 Twitter: @twitter_handle
-Email: email@email_client.com
-Project Link: https://github.com/chidiadi-emmanuel-nwosu/C-C_Logistics
-
-
-
-
+- Chinenye Nmoh 
