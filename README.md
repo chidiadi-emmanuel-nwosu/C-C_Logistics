@@ -35,19 +35,21 @@ To get started with this project, follow the steps below:
 1. Clone the repository.
    ```sh
    git clone https://github.com/chidiadi-emmanuel-nwosu/C-C_Logistics.git
-Install the required packages.
+   ```
+2. Install the required packages.
 
 ```sh
 pip install -r requirements.txt
-Configure your .env file with your Google Maps API key and email password credentials.
+	```
+3. Configure your .env file with your Google Maps API key and email password credentials.
 
 Start the application.
 
 ```sh
 python3 -m app.run_app
+```
 
-
-Contributing
+### Contributing
 We welcome contributions from the community. If you have suggestions to make this project better, please create a pull request or open an issue with the "enhancement" tag. Don't forget to star the project if you find it useful!
 
 License
@@ -59,14 +61,6 @@ Twitter: @twitter_handle
 Email: email@email_client.com
 Project Link: https://github.com/chidiadi-emmanuel-nwosu/C-C_Logistics
 
-Acknowledgments
-Acknowledgment 1
-Acknowledgment 2
-Acknowledgment 3
-vbnet
-Copy code
-
-You can copy this template into your README.md file, replacing placeholders like `[Homepage](home.png)` with your actual image reference, and updating the sections to provide information specific to your project. Make sure to create a `.env` file and configure it as per your project's requirements.
 
 
 
