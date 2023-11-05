@@ -5,10 +5,9 @@ from flask import Flask, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from app.config import config
 from flask_migrate import Migrate
 from flask_mail import Mail
-
+from app.config import config
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -27,14 +26,6 @@ def create_app(config_name):
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    app.config["MAIL_SERVER"] = 'smtp.gmail.com'
-    app.config["MAIL_PORT"] = 465
-    app.config["MAIL_USERNAME"] = 'chinenyeumeaku@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'nexx mpmp tusy eixg'
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = True
-    app.config['MAIL_DEFAULT_SENDER'] = ('Chinenye from C&C logistics',
-                                         'chinenyeumeaku@gmail.com')
     mail.init_app(app)
 
     @app.before_request

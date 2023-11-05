@@ -3,10 +3,12 @@
 from uuid import uuid4
 from flask import render_template, jsonify, request, flash
 from flask_login import login_required, current_user
+from flask_mail import Message
 from app.routes import app_routes
+from app.models.agent import DeliveryAgent
 from app.models.request import DeliveryRequest
 from app.models.user import User
-from app import db
+from app import db, mail
 
 
 @app_routes.route("/dashboard/accept-delivery", methods=['GET', 'POST'])
@@ -15,12 +17,26 @@ def accept_delivery():
     """deliveries routes"""
     if request.method == 'POST':
         delivery_id = request.form.get('delivery_id')
-        delivery_ = DeliveryRequest.query.filter_by(id=delivery_id).first()
-        if delivery_:
+        delivery_data = DeliveryRequest.query.filter_by(id=delivery_id).first()
+        if delivery_data:
             try:
-                delivery_.agent_id = current_user.id
-                delivery_.order_status = 'Delivery Accepted'
+                delivery_data.agent_id = current_user.id
+                delivery_data.order_status = 'Delivery Accepted'
                 db.session.commit()
+
+                user_id = delivery_data.user_id
+                agent_id = delivery_data.agent_id
+                user = User.query.filter_by(id=user_id).first()
+                agent = DeliveryAgent.query.filter_by(id=agent_id).first()
+                email = user.email
+                msg = Message('Delivery Request Accepted', recipients=[email])
+                msg.body = f"""Your delivery request with id {delivery_data.id} has been accepted and a delivery agent is on his way.
+
+                Agent name: {agent.first_name} {agent.last_name}.
+                Agent phone number: {agent.phone_number}."""
+                mail.send(msg)
+                flash("An email has been sent to the user", 'success')
+
                 return jsonify({'success': True})
             except Exception as e:
                 flash('Error occured while accept delivery')
@@ -35,6 +51,6 @@ def accept_delivery():
             "accept.html",
             my_deliveries=my_deliveries,
             users=users,
-            dashboard_title="My Deliveries",
+            dashboard_title="Accept Delivery Request",
             cache_id=str(uuid4())
             )

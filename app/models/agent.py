@@ -21,6 +21,9 @@ class DeliveryAgent(BaseModel, db.Model, UserMixin):
     license_expiration_date = db.Column(db.Date, nullable=False)
     license_image_file = db.Column(db.LargeBinary, nullable=False)
 
+    def __repr__(self):
+        return f"Rider ID: {self.id} Email: {self.email}"
+
     def to_dict(self, include_related=True):
         result = super().to_dict()
 

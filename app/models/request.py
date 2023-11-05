@@ -38,3 +38,5 @@ class DeliveryRequest(BaseModel, db.Model):
                                if self.agent else None)
 
         return result
+    def __repr__(self):
+        return f'User_id: {self.user_id}, {self.agent_id}'
