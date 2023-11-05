@@ -37,17 +37,18 @@ To get started with this project, follow the steps below:
    git clone https://github.com/chidiadi-emmanuel-nwosu/C-C_Logistics.git
    ```
 2. Install the required packages.
-
-```sh
-pip install -r requirements.txt
+	```sh
+	pip install -r requirements.txt
 	```
 3. Configure your .env file with your Google Maps API key and email password credentials.
-
-Start the application.
-
-```sh
-python3 -m app.run_app
-```
+	```sh
+	MAIL_PASSWORD=YOUR_MAIL_PASSWORD
+	API_key=YOUR_API_KEY
+	```
+4. Start the application.
+	```sh
+	python3 -m app.run_app
+	```
 
 ### Contributing
 We welcome contributions from the community. If you have suggestions to make this project better, please create a pull request or open an issue with the "enhancement" tag. Don't forget to star the project if you find it useful!
