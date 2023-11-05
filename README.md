@@ -1,9 +1,5 @@
+# C&C logistics
 
-Certainly, here's an example of a good README file for your C&C Logistics project:
-
-markdown
-Copy code
-<!-- C&C Logistics -->
 ![Homepage](home.png)
 
 ## Project Overview
@@ -58,5 +54,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Authors
 - Chidiadi Nwosu [Github](https://github.com/chidiadi-emmanuel-nwosu/) / [Linkedin](https://chidiadi-nwosu) / [Email](chidiadi.emmanuel.nwosu@gmail.com) 
-Twitter: @twitter_handle
 - Chinenye Nmoh 
