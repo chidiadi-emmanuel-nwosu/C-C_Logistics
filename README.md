@@ -43,8 +43,8 @@ To get started with this project, follow the steps below:
 	```
 ### Start the application.
    ```sh
-    python3 -m app.run_app
-	```
+   python3 -m app.run_app
+   ```
 
 ### Contributing
 We welcome contributions from the community. If you have suggestions to make this project better, please create a pull request or open an issue with the "enhancement" tag. Don't forget to star the project if you find it useful!
