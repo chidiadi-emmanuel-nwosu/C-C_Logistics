@@ -11,7 +11,7 @@ class Config:
     SECRET_KEY = secrets.token_hex(16)
     SQLALCHEMY_DATABASE_URI = 'sqlite:///c_c-logistics.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    API_KEY = getenv('API_key')
+    API_KEY = getenv('API_KEY')
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USERNAME = 'cclogisticsapp@gmail.com'
