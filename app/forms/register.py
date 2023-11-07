@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileSize, FileAllowed
 from wtforms import StringField, SelectField, PasswordField, SubmitField, FileField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp, ValidationError
 
@@ -57,7 +58,10 @@ class RegistrationForm(FlaskForm):
             validators=[Regexp(r'^[A-Z0-9]*$', message='Invalid license number format')]
         )
     license_expiration_date = StringField('License Expiration Date')
-    license_image_file = FileField('License Image File')
+    license_image_file = FileField('License Image File', validators=[
+        FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!'),
+        FileSize(max_size=2 * 1024 * 1024, message='File size must be less than 2MB.')
+        ])
     password = PasswordField('Password', validators=[DataRequired(), Length(
         min=8, message='password field should be at least 8 characters')])
     confirm_password = PasswordField('Confirm Password', validators=[
