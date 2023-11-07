@@ -39,7 +39,7 @@ To get started with this project, follow the steps below:
 3. Configure your .env file with your Google Maps API key and email password credentials.
 	```sh
 	MAIL_PASSWORD=YOUR_MAIL_PASSWORD
-	API_key=YOUR_API_KEY
+	API_KEY=YOUR_API_KEY
 	```
 ### Start the application.
    ```sh
