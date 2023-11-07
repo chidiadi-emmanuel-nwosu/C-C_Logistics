@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_mail import Mail
+from flask_wtf.csrf import CSRFProtect
 from app.config import config
 
 db = SQLAlchemy()
@@ -16,6 +17,7 @@ login_manager.login_view = 'app_routes.login'
 login_manager.login_message_category = 'info'
 migrate = Migrate()
 mail = Mail()
+csrf = CSRFProtect()
 
 
 def create_app(config_name):
@@ -27,6 +29,7 @@ def create_app(config_name):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+    csrf.init_app(app)
 
     @app.before_request
     def handle_session():
